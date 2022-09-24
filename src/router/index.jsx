@@ -10,7 +10,17 @@ function renderRoutes(routes) {
   return routes.map(item => {
     let res = { ...item };
     if (!item.path) return;
-    if (item.component) {
+
+    if (item.element) {
+      const Component = item.element;
+      res.element = (
+        <BeforeEach route={item}>
+          <Component />
+        </BeforeEach>
+      );
+    }
+
+    if (!res.element && item.component) {
       const Component = React.lazy(item.component);
       res.element = (
         <React.Suspense>
@@ -23,7 +33,6 @@ function renderRoutes(routes) {
 
     // children
     if (item.children) {
-      console.log(item.children);
       res.children = renderRoutes(item.children);
     }
 
@@ -37,8 +46,6 @@ function renderRoutes(routes) {
 }
 
 function BeforeEach({ route, children }) {
-  console.log(route)
-  console.log(children)
   if (route && route.meta && route.meta.title) {
     document.title = route.meta.title;
   }
@@ -48,5 +55,5 @@ function BeforeEach({ route, children }) {
     // navigate('/login');
   }
 
-  return <div className="frame">{children}</div>;
+  return route.children ? <div className="frame">{children}</div> : children
 }
