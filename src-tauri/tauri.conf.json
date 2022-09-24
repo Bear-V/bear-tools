@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "bear-tools-vite-react",
-    "version": "0.0.0"
+    "productName": "bear-tools",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.tauri.bearTool",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -55,11 +55,13 @@
     },
     "windows": [
       {
+        "title": "bear-tools",
         "fullscreen": false,
-        "height": 600,
         "resizable": true,
-        "title": "bear-tools-vite-react",
-        "width": 800
+        "width": 800,
+        "height": 600,
+        "minWidth": 800,
+        "minHeight": 600
       }
     ]
   }
