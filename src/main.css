@@ -6,11 +6,3 @@
     padding: 0;
     margin: 0;
 }
-
-.frame {
-    @apply flex
-}
-
-.button-div {
-
-}

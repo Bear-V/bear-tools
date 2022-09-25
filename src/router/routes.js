@@ -1,7 +1,9 @@
 import Layout from '../layouts/Base';
+import About from '../views/About';
 import ErrorPage from '../views/Error/404.jsx';
 import Home from '../views/Home';
-import About from '../views/About'
+import JsonTool from '../views/JsonTool/index.jsx';
+
 
 export default [
   {
@@ -19,6 +21,13 @@ export default [
         element: Home,
         meta: {
           title: '首页',
+        },
+      },
+      {
+        path: '/jsonTool',
+        component: () => import('../views/JsonTool'),
+        meta: {
+          title: 'JSON工具',
         },
       },
       {
