@@ -8,7 +8,6 @@ function Index() {
   let [jsonStr, setJsonStr] = useState({})
 
   async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     setInputStr(await invoke("greet", {name: inputStr}));
   }
 
