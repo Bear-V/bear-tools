@@ -55,5 +55,5 @@ function BeforeEach({ route, children }) {
     // navigate('/login');
   }
 
-  return route.children ? <div className="flex">{children}</div> : children
+  return route.children ? <div className="flex overflow-hidden">{children}</div> : children
 }

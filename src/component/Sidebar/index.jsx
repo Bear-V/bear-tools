@@ -15,7 +15,7 @@ function GlobalSidebar() {
                     hover:scrollbar-thumb-blue-400"
           >
             <Button name="首页" click={() => navigate('/home')}/>
-            <Button name="JSON工具" click={() => navigate('/jsonTool')}/>
+            <Button name="STRING->JSON" click={() => navigate('/jsonTool')}/>
             <Button name="关于" click={() => navigate('/about')}/>
           </div>
 
