@@ -23,7 +23,10 @@ dist-ssr
 *.sw?
 
 # node js
+/.yarn/
 yarn.lock
+.pnp.cjs
+.pnp.loader.mjs
 
 # rust
 Cargo.lock

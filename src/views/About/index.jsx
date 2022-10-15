@@ -4,10 +4,10 @@ function Index() {
   const navigate = useNavigate();
 
   return (
-      <div>
-        <div>about</div>
-        <button onClick={() => navigate('/')}>go home</button>
-      </div>
+    <div>
+      <div>about</div>
+      <button onClick={() => navigate('/')}>go home</button>
+    </div>
   );
 }
 
