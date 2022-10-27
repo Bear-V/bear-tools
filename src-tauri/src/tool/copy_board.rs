@@ -2,7 +2,7 @@ use clipboard::{ClipboardContext, ClipboardProvider};
 
 pub fn get_copy() -> String {
     let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
-    ctx.get_contents().unwrap()
+    ctx.get_contents().unwrap_or(String::from("获取剪切板数据错误"))
 }
 
 pub fn set_copy(input: String) -> String {
