@@ -1,4 +1,7 @@
 mod copy_board;
+mod timestamp;
+
+pub use timestamp::timestamp_format;
 
 #[tauri::command]
 pub fn board_fn(input: String, action: u8) -> String {

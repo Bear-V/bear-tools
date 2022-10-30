@@ -2,10 +2,8 @@ import Layout from '../layouts/Base';
 import About from '../views/About';
 import ErrorPage from '../views/Error/404.jsx';
 import Home from '../views/Home';
-import JsonTool from '../views/JsonTool/index.jsx';
 
-
-export default [
+const route_list = [
   {
     path: '/',
     component: () => import('../layouts/Base'),
@@ -31,6 +29,13 @@ export default [
         },
       },
       {
+        path: '/timestampTool',
+        component: () => import('../views/Timestamp'),
+        meta: {
+          title: '时间戳工具',
+        },
+      },
+      {
         path: '/about',
         component: () => import('../views/About'),
         element: About,
@@ -48,3 +53,5 @@ export default [
     },
   },
 ];
+
+export default route_list

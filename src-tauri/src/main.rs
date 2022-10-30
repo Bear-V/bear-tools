@@ -5,7 +5,7 @@
 
 mod tool;
 
-use tool::{board_fn};
+use tool::{board_fn,timestamp_format};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -16,7 +16,7 @@ fn greet(name: &str) -> String {
 fn main() {
     let context = tauri::generate_context!();
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet,board_fn])
+        .invoke_handler(tauri::generate_handler![greet,board_fn,timestamp_format])
         .menu(tauri::Menu::os_default(&context.package_info().name))
         .run(context)
         .expect("error while running tauri application");
