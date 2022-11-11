@@ -1,9 +1,9 @@
 [package]
 name = "bear-tools-vite-react"
-version = "0.0.0"
+version = "0.0.1"
 description = "Bear-Tools"
 authors = ["BearV <zhuzhaoxio@gmail.com>"]
-license = ""
+license = "MIT"
 repository = ""
 edition = "2021"
 rust-version = "1.57"
