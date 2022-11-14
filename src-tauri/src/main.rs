@@ -4,6 +4,7 @@
 )]
 
 mod tool;
+mod base_conversion;
 
 use tool::{board_fn,timestamp_format};
 
