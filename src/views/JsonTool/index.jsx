@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import ReactJson from 'react-json-view';
-import { invoke } from '@tauri-apps/api/tauri';
+import {invoke} from '@tauri-apps/api/tauri';
 import JTButton from './JTButton.jsx';
 
 function Index() {
@@ -8,11 +8,12 @@ function Index() {
   let [jsonStr, setJsonStr] = useState({});
 
   const handlerClipboard = async () => {
-    const board_value = await invoke('board_fn', { input: '', action: 1 });
+    const board_value = await invoke('board_fn', {input: '', action: 1});
     setInputStr(board_value);
     try {
       setJsonStr(JSON.parse(board_value));
-    } catch (e) {}
+    } catch (e) {
+    }
   };
   const handlerDefault = () => {
     let value = {
@@ -40,7 +41,7 @@ function Index() {
             price: 22.99,
           },
         ],
-        bicycle: { color: 'red', price: 19.95 },
+        bicycle: {color: 'red', price: 19.95},
       },
     };
     setInputStr(JSON.stringify(value));
@@ -60,35 +61,34 @@ function Index() {
     try {
       value = JSON.parse(e.target.value);
       setJsonStr(value);
-    } catch (e) {}
+    } catch (e) {
+    }
   };
 
   // page element
   return (
     <>
-      <div className="mx-2 h-8 text-center font-mono ">STRING->JSON</div>
-      <div className="m-2 h-5/6 bg-red-200 flex flex-row space-x-1 divide-x divide-gray-400 divide-double">
-        <div className="flex-1 py-2 pl-2 pr-1 w-full h-full flex flex-col space-y-2">
+      <div className="h-full flex flex-row space-x-1">
+        <div className="flex-1 w-full h-full border-2 pt-2 flex flex-col space-y-2">
           <div className="flex flex-row space-x-2 pl-2 h-6">
-            <JTButton click={handlerClipboard} name="使用剪切板" />
-            <JTButton click={handlerDefault} name="示例" />
-            <JTButton click={handlerClear} name="清空" />
+            <JTButton click={handlerClipboard} name="使用剪切板"/>
+            <JTButton click={handlerDefault} name="示例"/>
+            <JTButton click={handlerClear} name="清空"/>
           </div>
           <div className="w-full h-full">
             <textarea
-              className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-200"
               value={inputStr}
               onChange={handlerInput}
             ></textarea>
           </div>
         </div>
-        <div className="flex-1 py-2 pl-1 pr-2 w-full h-full">
+        <div className="flex-1 py-2 pl-1 pr-2 w-full h-full border-2">
           <div
             className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono
                     overflow-auto
                     scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-blue-100
-                    hover:scrollbar-thumb-blue-400
-                    "
+                    hover:scrollbar-thumb-blue-400"
           >
             <ReactJson src={jsonStr} displayDataTypes={false}></ReactJson>
           </div>
