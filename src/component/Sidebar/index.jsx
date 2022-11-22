@@ -69,7 +69,7 @@ function GlobalSidebar() {
           })}
         </ul>
         <div className="flex justify-center m-2">
-          <div className="bg-gray-400 text-sm text-center text-gray-800 rounded-lg w-20"
+          <div className="bg-gray-400 text-sm text-center text-gray-800 rounded-lg select-none cursor-pointer w-20"
                onClick={() => navigate('/about')}>
             关于
           </div>
