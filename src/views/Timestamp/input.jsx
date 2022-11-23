@@ -9,7 +9,7 @@ function ReadOnlyInputCopy({className, value, click, name}) {
   };
   return (
     <div>
-      <input className={className || "w-28"} type="text" readOnly={true} value={value}/>
+      <input className={"text-sm "+(className || "w-16")} type="text" readOnly={true} value={value}/>
       <span
         className={"m-2 select-none cursor-pointer transition duration-300 border-2 border-gray-50 hover:bg-black hover:text-gray-300 focus:ease-in-out focus:duration-700"}
         onClick={handlerCopy}>复制</span>
