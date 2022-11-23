@@ -1,14 +1,14 @@
 import {useState} from 'react';
 import ReactJson from 'react-json-view';
 import {invoke} from '@tauri-apps/api/tauri';
-import JTButton from './JTButton.jsx';
+import Button from '../../component/Button';
 
 function Index() {
   let [inputStr, setInputStr] = useState('请输入JSON字符串');
   let [jsonStr, setJsonStr] = useState({});
 
   const handlerClipboard = async () => {
-    const board_value = await invoke('board_fn', {input: '', action: 1});
+    const board_value = await invoke('get_copy');
     setInputStr(board_value);
     try {
       setJsonStr(JSON.parse(board_value));
@@ -71,9 +71,9 @@ function Index() {
       <div className="h-full flex flex-row space-x-1">
         <div className="flex-1 w-full h-full border-2 pt-2 flex flex-col space-y-2">
           <div className="flex flex-row space-x-2 pl-2 h-6">
-            <JTButton click={handlerClipboard} name="使用剪切板"/>
-            <JTButton click={handlerDefault} name="示例"/>
-            <JTButton click={handlerClear} name="清空"/>
+            <Button click={handlerClipboard} name="使用剪切板"/>
+            <Button click={handlerDefault} name="示例"/>
+            <Button click={handlerClear} name="清空"/>
           </div>
           <div className="w-full h-full">
             <textarea

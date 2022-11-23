@@ -27,7 +27,8 @@ fn base_n_to_10(num_str: &str, radix: u32) -> u128 {
     result
 }
 
-fn base_n_to_n(num_str: &str, start_radix: u32, end_radix: u32) -> String {
+#[tauri::command]
+pub fn base_n_to_n(num_str: &str, start_radix: u32, end_radix: u32) -> String {
     let start_num = base_n_to_10(num_str, start_radix);
     base_10_to_n(start_num, end_radix)
 }
