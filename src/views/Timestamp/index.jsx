@@ -84,7 +84,6 @@ function Index() {
 
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
       <div className="m-2 flex flex-col space-y-2 border-2 h-full">
         <div className="m-2 space-x-4">
           <span>输入：</span>

@@ -36,6 +36,13 @@ const route_list = [
         },
       },
       {
+        path: '/baseHex',
+        component: () => import('../views/BaseHex'),
+        meta: {
+          title: 'base64_hex',
+        },
+      },
+      {
         path: '/about',
         component: () => import('../views/About'),
         element: About,
