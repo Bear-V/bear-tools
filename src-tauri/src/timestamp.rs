@@ -7,13 +7,14 @@ use serde_json;
 struct TimeFormat {
     utc: String,
     local: String,
+    // #[serde(rename = "unixTime")]
     unix_time: i64,
     day_of_year: i64,
     week_of_year: i64,
     is_leap_year: bool,
-    a_format:String,
-    b_format:String,
-    c_format:String,
+    a_format: String,
+    b_format: String,
+    c_format: String,
 }
 
 
@@ -45,7 +46,7 @@ pub fn timestamp_format(input: i64) -> String {
     let b_format = local_dt.format("%Y/%m/%d %H:%M:%S").to_string();
     let c_format = local_dt.format("%Y年%m月%d日 %H时%M分%S秒").to_string();
 
-    let time_format = TimeFormat{
+    let time_format = TimeFormat {
         utc,
         local,
         unix_time,
@@ -63,5 +64,5 @@ pub fn timestamp_format(input: i64) -> String {
 #[test]
 fn one() {
     let format_date = timestamp_format(1669192819000);
-    println!("{:?}",format_date);
+    println!("{:?}", format_date);
 }

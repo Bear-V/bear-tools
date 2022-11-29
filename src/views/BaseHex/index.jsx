@@ -1,4 +1,4 @@
-import toast, {Toaster} from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import {invoke} from '@tauri-apps/api/tauri';
 import {useState} from "react";
 import Button from '../../component/Button';
