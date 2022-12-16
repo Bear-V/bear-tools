@@ -35,6 +35,6 @@ pub fn check_cidr(input: String) -> String {
 
 #[test]
 fn one() {
-    let res = check_cidr("127.0.0.1/16".to_string());
+    let res = check_cidr("127.0.0.1".to_string());
     println!("{}", res)
 }
