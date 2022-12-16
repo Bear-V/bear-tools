@@ -28,6 +28,7 @@ function Index() {
     const copy_data = await invoke('get_copy');
     if (!isNaN(Number(copy_data))) {
       setInputTime(copy_data);
+      await timeToDate(currentTime);
     } else {
       toast.error('剪切板数据不是有效数字');
     }
