@@ -7,32 +7,31 @@ function Index() {
   const [inputData, setInputData] = useState("");
   const [outputData, setOutputData] = useState("");
   const [encodeMethod, setEncodeMethod] = useState(true);
-  const [needEnter, setNeedEnter] = useState(false);
 
   const handlerDefault = async () => {
     if (encodeMethod) {
-      let base64_default_value = 'I5fb7mkRTiIDu0JLToTpry1+45s='
+      let base64_default_value = '6L+Z5piv5LiA5p2h5rWL6K+V5pWw5o2u'
       setInputData(base64_default_value);
-      await handlerBaseToHex(base64_default_value)
+      await handlerBase64ToStr(base64_default_value)
     } else {
-      let hex_defalut_value = '2397dbee69114e2203bb424b4e84e9af2d7ee39b'
-      setInputData(hex_defalut_value);
-      await handlerHexToBase(hex_defalut_value)
+      let string_default_value = '这是一条测试数据'
+      setInputData(string_default_value);
+      await handlerStrToBase64(string_default_value)
     }
   }
 
 
-  const handlerHexToBase = async (value) => {
+  const handlerStrToBase64 = async (value) => {
     if (value) {
-      const res = await invoke("hex_to_base64", {input: value + ''})
+      const res = await invoke("string_to_base64", {input: value + ''})
       setOutputData(res);
     } else {
       setOutputData("");
     }
   }
-  const handlerBaseToHex = async (value) => {
+  const handlerBase64ToStr = async (value) => {
     if (value) {
-      const res = await invoke("base64_to_hex", {input: value + ''})
+      const res = await invoke("base64_to_string", {input: value + ''})
       setOutputData(res);
     } else {
       setOutputData("");
@@ -42,9 +41,9 @@ function Index() {
     let value = e.target.value;
     setInputData(value);
     if (encodeMethod) {
-      await handlerBaseToHex(value)
+      await handlerBase64ToStr(value)
     } else {
-      await handlerHexToBase(value)
+      await handlerStrToBase64(value)
     }
   }
 
@@ -52,20 +51,20 @@ function Index() {
     setEncodeMethod(!encodeMethod)
     let value = inputData
     if (encodeMethod) {
-      await handlerBaseToHex(value)
+      await handlerBase64ToStr(value)
     } else {
-      await handlerHexToBase(value)
+      await handlerStrToBase64(value)
     }
-    toast.success(`更换方法为${encodeMethod ? 'BASE64转HEX' : "HEX转BASE64"}`)
+    toast.success(`更换方法为${encodeMethod ? 'BASE64转STRING' : "STRING转BASE64"}`)
   }
 
   const handlerClipboard = async () => {
     const board_value = await invoke('get_copy');
     setInputData(board_value);
     if (encodeMethod) {
-      await handlerBaseToHex(board_value)
+      await handlerBase64ToStr(board_value)
     } else {
-      await handlerHexToBase(board_value)
+      await handlerStrToBase64(board_value)
     }
   };
 
@@ -87,9 +86,9 @@ function Index() {
           <div className="flex flex-row space-x-1">
             <div className="select-none flex flex-row">
               <span>输入：</span>
-              <Button click={handlerClipboard} name="使用剪切板"/>
-              <Button click={handlerDefault} name="示例"/>
-              <Button click={handlerClear} name="清空"/>
+              <Button click={handlerClipboard} name="使用剪切板" />
+              <Button click={handlerDefault} name="示例" />
+              <Button click={handlerClear} name="清空" />
             </div>
             <div className="flex flex-row space-x-1">
               <span className="select-none">方法：</span>
@@ -107,11 +106,11 @@ function Index() {
                           d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                   </svg>}
               </span>
-              <span className={encodeMethod ? "select-none" : "select-none text-red-500"}>HEX</span>
+              <span className={encodeMethod ? "select-none" : "select-none text-red-500"}>STRING</span>
             </div>
 
           </div>
-          <div className=" w-full h-full ">
+          <div className="pr-4 w-full h-full">
               <textarea
                 className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-1 focus:ring-gray-200"
                 onChange={handlerInputChange}
@@ -122,11 +121,12 @@ function Index() {
         <div className="flex-1 w-full h-full flex flex-col space-y-2">
           <div className="select-none flex flex-row">
             <span>输出：</span>
-            <Button click={handlerOutputSetCopy} name="复制"/>
+            <Button click={handlerOutputSetCopy} name="复制" />
           </div>
-          <div className="w-full h-full">
+          <div className="pr-4 w-full h-full">
             <textarea
               className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-200"
+              readOnly={true}
               value={outputData}
             ></textarea>
           </div>

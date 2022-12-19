@@ -1,6 +1,6 @@
 [package]
-name = "bear-tools-vite-react"
-version = "0.0.1"
+name = "bear-tools"
+version = "0.0.4"
 description = "Bear-Tools"
 authors = ["BearV <zhuzhaoxio@gmail.com>"]
 license = "MIT"

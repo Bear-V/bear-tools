@@ -36,21 +36,35 @@ const route_list = [
         },
       },
       {
-        path: '/baseHex',
-        component: () => import('../views/BaseHex'),
+        path: '/jwt',
+        component: () => import('../views/JWT'),
         meta: {
-          title: 'base64_hex',
+          title: 'JWT',
         },
       },
       {
-        path: '/about',
-        component: () => import('../views/About'),
-        element: About,
+        path: '/base64String',
+        component: () => import('../views/Base64String'),
         meta: {
-          title: '关于',
+          title: 'base64_string',
         },
       },
+      {
+        path: '/base64Hex',
+        component: () => import('../views/Base64Hex'),
+        meta: {
+          title: 'base64_hex',
+        },
+      }
     ],
+  },
+  {
+    path: '/about',
+    component: () => import('../views/About'),
+    element: About,
+    meta: {
+      title: '关于',
+    },
   },
   {
     path: '*',
@@ -58,7 +72,7 @@ const route_list = [
     meta: {
       title: '404',
     },
-  },
+  }
 ];
 
 export default route_list
