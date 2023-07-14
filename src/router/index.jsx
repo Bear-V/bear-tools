@@ -44,7 +44,6 @@ function renderRoutes(routes) {
     }
     return item;
   });
-  console.log(a)
   return a
 }
 

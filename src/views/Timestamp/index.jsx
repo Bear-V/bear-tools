@@ -43,7 +43,6 @@ function Index() {
       const format_date = await invoke('timestamp_format', {
         input: e,
       });
-      console.log(JSON.parse(format_date));
       setOutputData(JSON.parse(format_date));
     }
   };

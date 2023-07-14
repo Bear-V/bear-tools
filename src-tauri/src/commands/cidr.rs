@@ -7,7 +7,7 @@ use serde_json;
 pub struct CidrRes {
     min: String,
     max: String,
-    size: u32,
+    size: u64,
     mask: String,
 }
 
@@ -19,7 +19,10 @@ pub fn check_cidr(input: String) -> String {
             let min = r.network().to_string();
             let max = r.broadcast().to_string();
             let mask = r.mask().to_string();
-            let size = r.size();
+            let mut size = 4294967296;
+            if r.prefix() != 0 {
+                size = r.size() as u64;
+            }
             let cidr_res = CidrRes {
                 min,
                 max,

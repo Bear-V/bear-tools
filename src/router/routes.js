@@ -36,13 +36,6 @@ const route_list = [
         },
       },
       {
-        path: '/jwt',
-        component: () => import('../views/JWT'),
-        meta: {
-          title: 'JWT',
-        },
-      },
-      {
         path: '/base64String',
         component: () => import('../views/Base64String'),
         meta: {
@@ -55,7 +48,21 @@ const route_list = [
         meta: {
           title: 'base64_hex',
         },
-      }
+      },
+      {
+        path: '/jwt',
+        component: () => import('../views/JWT'),
+        meta: {
+          title: 'JWT',
+        },
+      },
+      {
+        path: '/cidr',
+        component: () => import('../views/CIDR'),
+        meta: {
+          title: 'CIDR',
+        },
+      },
     ],
   },
   {
