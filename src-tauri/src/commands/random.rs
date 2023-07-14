@@ -61,8 +61,21 @@ fn random_string_handle(
     vowel_string
 }
 
-#[test]
-fn random_handle_test() {
-    let result = random_string(10, false, false, false, String::from("!@#$%^&*"), 10);
-    println!("{:?}", result);
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn random_string_handle_should_work(){
+        let handle = random_string_handle(10, true, true, true, String::from("!@#$%^&*"));
+        println!("{:?}", handle);
+        assert_eq!(handle.len(), 10);
+    }
+
+    #[test]
+    fn random_string_should_work() {
+        let result = random_string(10, false, false, false, String::from("!@#$%^&*"), 10);
+        println!("{:?}", result);
+        assert_eq!(result.len(), 10);
+    }
 }

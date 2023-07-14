@@ -24,17 +24,22 @@ pub fn hex_to_base64(input: String) -> String {
     }
 }
 
-#[test]
-fn one() {
-    let hex = "2397dbee69114e2203bb424b4e84e9af2d7ee39b";
-    let bh = hex_to_base64(hex.to_string());
-    println!("{}", bh);
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    let base = "I5fb7mkRTiIDu0JLToTpry1+45s=";
-    let hb = base64_to_hex(base.to_string());
-    println!("{}", hb);
+    #[test]
+    fn hex_base64_handles_should_work() {
+        let hex = "2397dbee69114e2203bb424b4e84e9af2d7ee39b";
+        let bh = hex_to_base64(hex.to_string());
+        println!("{}", bh);
+
+        let base = "I5fb7mkRTiIDu0JLToTpry1+45s=";
+        let hb = base64_to_hex(base.to_string());
+        println!("{}", hb);
 
 
-    assert_eq!(hb, hex.to_string());
-    assert_eq!(bh, base.to_string())
+        assert_eq!(hb, hex.to_string());
+        assert_eq!(bh, base.to_string())
+    }
 }

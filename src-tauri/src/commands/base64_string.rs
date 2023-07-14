@@ -17,10 +17,16 @@ pub fn string_to_base64(input: String) -> String {
     BASE64.encode(input.as_bytes())
 }
 
-#[test]
-fn one() {
-    let s_to_b64 = string_to_base64("今天星期三".to_string());
-    println!("{}", s_to_b64);
-    let b64_tos = base64_to_string(s_to_b64);
-    println!("{}", b64_tos);
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn base64_string_handle_should_work() {
+        let s_to_b64 = string_to_base64("今天星期三".to_string());
+        println!("{}", s_to_b64);
+        let b64_tos = base64_to_string(s_to_b64);
+        println!("{}", b64_tos);
+    }
 }

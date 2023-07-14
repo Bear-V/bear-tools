@@ -61,8 +61,14 @@ pub fn timestamp_format(input: i64) -> String {
     serde_json::to_string(&time_format).unwrap()
 }
 
-#[test]
-fn one() {
-    let format_date = timestamp_format(1669192819000);
-    println!("{:?}", format_date);
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_timestamp_format_handler() {
+        let format_date = timestamp_format(1669192819000);
+        println!("{}", format_date);
+        assert_eq!(format_date, "{\"utc\":\"2022-11-23T08:40:19Z\",\"local\":\"Wed, 23 Nov 2022 16:40:19 +0800\",\"unix_time\":1669192819,\"day_of_year\":326,\"week_of_year\":47,\"is_leap_year\":false,\"a_format\":\"2022-11-23 16:40:19\",\"b_format\":\"2022/11/23 16:40:19\",\"c_format\":\"2022年11月23日 16时40分19秒\"}")
+    }
 }

@@ -1,5 +1,5 @@
 import Layout from '../layouts/Base';
-import About from '../views/About';
+import About from '../views/About.jsx';
 import ErrorPage from '../views/Error/404.jsx';
 import Home from '../views/Home';
 
@@ -67,7 +67,7 @@ const route_list = [
   },
   {
     path: '/about',
-    component: () => import('../views/About'),
+    component: () => import('../views/About.jsx'),
     element: About,
     meta: {
       title: '关于',

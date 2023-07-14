@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use ipnetwork::Ipv4Network;
 use serde::{Deserialize, Serialize};
-use serde_json;
+// use serde_json;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CidrRes {
@@ -12,32 +12,32 @@ pub struct CidrRes {
 }
 
 #[tauri::command]
-pub fn check_cidr(input: String) -> String {
-    let res_network = Ipv4Network::from_str(input.as_str());
-    match res_network {
-        Ok(r) => {
-            let min = r.network().to_string();
-            let max = r.broadcast().to_string();
-            let mask = r.mask().to_string();
-            let mut size = 4294967296;
-            if r.prefix() != 0 {
-                size = r.size() as u64;
-            }
-            let cidr_res = CidrRes {
-                min,
-                max,
-                size,
-                mask,
-            };
-            serde_json::to_string(&cidr_res).unwrap()
-        }
-        Err(_) => "传入数据有问题，请检查".to_string(),
+pub fn check_cidr(input: String) -> CidrRes {
+    let res_network = Ipv4Network::from_str(input.as_str()).unwrap();
+
+    let min = res_network.network().to_string();
+    let max = res_network.broadcast().to_string();
+    let mask = res_network.mask().to_string();
+    let mut size = 4294967296;
+    if res_network.prefix() != 0 {
+        size = res_network.size() as u64;
+    }
+    CidrRes {
+        min,
+        max,
+        size,
+        mask,
     }
 }
 
 
-#[test]
-fn one() {
-    let res = check_cidr("127.0.0.1".to_string());
-    println!("{}", res)
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn check_cidr_should_work() {
+        let res = check_cidr("127.0.0.1".to_string());
+        println!("{:?}", res);
+    }
 }

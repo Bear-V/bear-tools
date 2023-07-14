@@ -13,9 +13,15 @@ pub fn set_copy(input: String) -> String {
     format!("success")
 }
 
-#[test]
-fn copy_test() {
-    set_copy("今天去吃鸡".to_string());
-    let s = get_copy();
-    println!("{s}");
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn get_copy_should_work() {
+        set_copy("今天去吃鸡".to_string());
+        let s = get_copy();
+        println!("{s}");
+        assert_eq!(s, "今天去吃鸡");
+    }
 }

@@ -33,14 +33,20 @@ pub fn base_n_to_n(num_str: &str, start_radix: u32, end_radix: u32) -> String {
     base_10_to_n(start_num, end_radix)
 }
 
-#[test]
-fn one() {
-    let res = base_10_to_n(340282366920938463463374607431768211455, 2);
-    println!("{}", res);
 
-    let res = base_n_to_10(&res, 2);
-    println!("{}", res);
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    let res = base_n_to_n("10", 2, 2);
-    println!("{}", res);
+    #[test]
+    fn bases_conversion_handle_should_work() {
+        let res = base_10_to_n(340282366920938463463374607431768211455, 2);
+        println!("{}", res);
+
+        let res = base_n_to_10(&res, 2);
+        println!("{}", res);
+
+        let res = base_n_to_n("10", 2, 2);
+        println!("{}", res);
+    }
 }
