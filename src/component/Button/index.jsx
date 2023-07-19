@@ -1,4 +1,4 @@
-function Button({click, name}) {
+function Button({ click, name }) {
   return (
     <div
       className="select-none w-auto px-2 text-center text-sm font-bold rounded-full bg-blue-100 cursor-pointer

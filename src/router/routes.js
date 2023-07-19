@@ -11,75 +11,75 @@ const route_list = [
     children: [
       {
         path: '/',
-        redirect: '/home',
+        redirect: '/home'
       },
       {
         path: '/home',
         component: () => import('../views/Home'),
         element: Home,
         meta: {
-          title: '首页',
-        },
+          title: '首页'
+        }
       },
       {
         path: '/jsonTool',
         component: () => import('../views/JsonTool'),
         meta: {
-          title: 'JSON工具',
-        },
+          title: 'JSON工具'
+        }
       },
       {
         path: '/timestampTool',
         component: () => import('../views/Timestamp'),
         meta: {
-          title: '时间戳工具',
-        },
+          title: '时间戳工具'
+        }
       },
       {
         path: '/base64String',
         component: () => import('../views/Base64String'),
         meta: {
-          title: 'base64_string',
-        },
+          title: 'base64_string'
+        }
       },
       {
         path: '/base64Hex',
         component: () => import('../views/Base64Hex'),
         meta: {
-          title: 'base64_hex',
-        },
+          title: 'base64_hex'
+        }
       },
       {
         path: '/jwt',
         component: () => import('../views/JWT'),
         meta: {
-          title: 'JWT',
-        },
+          title: 'JWT'
+        }
       },
       {
         path: '/cidr',
         component: () => import('../views/CIDR'),
         meta: {
-          title: 'CIDR',
-        },
-      },
-    ],
+          title: 'CIDR'
+        }
+      }
+    ]
   },
   {
     path: '/about',
     component: () => import('../views/About.jsx'),
     element: About,
     meta: {
-      title: '关于',
-    },
+      title: '关于'
+    }
   },
   {
     path: '*',
     element: ErrorPage,
     meta: {
-      title: '404',
-    },
+      title: '404'
+    }
   }
 ];
 
-export default route_list
+export default route_list;
