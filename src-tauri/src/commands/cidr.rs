@@ -1,6 +1,6 @@
-use std::str::FromStr;
 use ipnetwork::Ipv4Network;
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 // use serde_json;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -29,7 +29,6 @@ pub fn check_cidr(input: String) -> CidrRes {
         mask,
     }
 }
-
 
 #[cfg(test)]
 mod tests {

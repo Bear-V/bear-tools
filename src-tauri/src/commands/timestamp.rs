@@ -1,5 +1,5 @@
-use chrono::Duration;
 use chrono::prelude::*;
+use chrono::Duration;
 use serde::{Deserialize, Serialize};
 use serde_json;
 
@@ -16,7 +16,6 @@ struct TimeFormat {
     b_format: String,
     c_format: String,
 }
-
 
 #[tauri::command]
 pub fn timestamp_format(input: i64) -> String {

@@ -66,7 +66,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn random_string_handle_should_work(){
+    fn random_string_handle_should_work() {
         let handle = random_string_handle(10, true, true, true, String::from("!@#$%^&*"));
         println!("{:?}", handle);
         assert_eq!(handle.len(), 10);

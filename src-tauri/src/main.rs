@@ -1,20 +1,22 @@
 #![cfg_attr(
-all(not(debug_assertions), target_os = "windows"),
-windows_subsystem = "windows"
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
 )]
 
-mod window;
 mod commands;
+mod window;
 
 use window::about::open_about;
 
-use commands::{base64_hex::{base64_to_hex, hex_to_base64},
-               base64_string::{string_to_base64, base64_to_string},
-               bases_conversion::base_n_to_n,
-               cidr::check_cidr,
-               copy_board::{set_copy, get_copy},
-               timestamp::timestamp_format, random::random_string};
-
+use commands::{
+    base64_hex::{base64_to_hex, hex_to_base64},
+    base64_string::{base64_to_string, string_to_base64},
+    bases_conversion::base_n_to_n,
+    cidr::check_cidr,
+    copy_board::{get_copy, set_copy},
+    random::random_string,
+    timestamp::timestamp_format,
+};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 fn main() {
@@ -22,9 +24,16 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             open_about,
-            base64_to_hex, hex_to_base64,string_to_base64,
-            base64_to_string,base_n_to_n, set_copy,
-            get_copy,check_cidr, timestamp_format,random_string
+            base64_to_hex,
+            hex_to_base64,
+            string_to_base64,
+            base64_to_string,
+            base_n_to_n,
+            set_copy,
+            get_copy,
+            check_cidr,
+            timestamp_format,
+            random_string
         ])
         .menu(tauri::Menu::os_default(&context.package_info().name))
         .run(context)

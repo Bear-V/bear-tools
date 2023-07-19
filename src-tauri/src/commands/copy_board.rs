@@ -3,7 +3,8 @@ use clipboard::{ClipboardContext, ClipboardProvider};
 #[tauri::command]
 pub fn get_copy() -> String {
     let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
-    ctx.get_contents().unwrap_or(String::from("获取剪切板数据错误"))
+    ctx.get_contents()
+        .unwrap_or(String::from("获取剪切板数据错误"))
 }
 
 #[tauri::command]

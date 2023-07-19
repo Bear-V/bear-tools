@@ -16,12 +16,12 @@ tauri-build = { version = "1.4", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.4", features = [ "api-all"] }
+tauri = { version = "1.4", features = ["api-all"] }
 clipboard = "0.5.0" # copy tools
 chrono = "0.4.19" # timestamp tools
 data-encoding = "2.3.2" # base_hex tools
 ipnetwork = "0.20.0" # cidr tools
-rand = "0.8.5"
+rand = "0.8.5" # random tools
 
 
 [features]

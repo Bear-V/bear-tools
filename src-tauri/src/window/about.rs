@@ -2,11 +2,7 @@ use tauri::{AppHandle, WindowBuilder, WindowUrl, Wry};
 
 #[tauri::command]
 pub async fn open_about(handle: AppHandle<Wry>) {
-    WindowBuilder::new(
-        &handle,
-        "about",
-        WindowUrl::App("/about".into()),
-    )
+    WindowBuilder::new(&handle, "about", WindowUrl::App("/about".into()))
         .inner_size(400.0, 300.0)
         .fullscreen(false)
         .resizable(false)

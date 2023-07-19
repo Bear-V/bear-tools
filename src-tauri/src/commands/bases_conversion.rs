@@ -21,7 +21,10 @@ fn base_n_to_10(num_str: &str, radix: u32) -> u128 {
     for i in 0..num_str.len() {
         result *= radix as u128;
         let target_char = num_str.chars().nth(i).unwrap_or('0');
-        let data = ALL_CHARS.chars().position(|i| i == target_char).unwrap_or(0);
+        let data = ALL_CHARS
+            .chars()
+            .position(|i| i == target_char)
+            .unwrap_or(0);
         result += data as u128;
     }
     result
@@ -32,7 +35,6 @@ pub fn base_n_to_n(num_str: &str, start_radix: u32, end_radix: u32) -> String {
     let start_num = base_n_to_10(num_str, start_radix);
     base_10_to_n(start_num, end_radix)
 }
-
 
 #[cfg(test)]
 mod tests {
