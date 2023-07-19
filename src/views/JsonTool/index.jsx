@@ -68,15 +68,15 @@ function Index() {
     <>
       <div className="h-full flex flex-row space-x-1">
         <div className="flex-1 w-full h-full border-2 pt-2 flex flex-col space-y-2">
-          <div className="flex'flex-row space-x-2 pl-2 h-6">
-  '         <Button click={handlerClipboard} name="使用剪切'" />
-'           <Button click={handlerDefault} name="示例" '>
-'           <Button click={handlerClear} name="清空" '>
-'         </div>
-          <div className="w-fu'l h-full">
-  '         <textarea
-              className="p-2 '-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-200"
-   '          value={inputStr}
+          <div className="flex flex-row space-x-2 pl-2 h-6">
+            <Button click={handlerClipboard} name="使用剪切板" />
+            <Button click={handlerDefault} name="示例" />
+            <Button click={handlerClear} name="清空" />
+          </div>
+          <div className="w-full h-full">
+            <textarea
+              className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-200"
+              value={inputStr}
               onChange={handlerInput}
             ></textarea>
           </div>
