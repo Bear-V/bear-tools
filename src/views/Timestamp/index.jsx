@@ -20,7 +20,7 @@ function Index() {
     is_leap_year: '',
     a_format: '',
     b_format: '',
-    c_format: '',
+    c_format: ''
   };
   let [outputData, setOutputData] = useState(timestampFormat);
 
@@ -41,7 +41,7 @@ function Index() {
   const timeToDate = async e => {
     if (!isNaN(Number(e))) {
       const format_date = await invoke('timestamp_format', {
-        input: e,
+        input: e
       });
       setOutputData(JSON.parse(format_date));
     }
@@ -72,8 +72,7 @@ function Index() {
       }
       setCurrentTime(currentTime);
       if (outputData.day_of_year) {
-        outputData['relative'] =
-          Math.ceil(Date.now() / 1000) - outputData.unix_time;
+        outputData['relative'] = Math.ceil(Date.now() / 1000) - outputData.unix_time;
         setOutputData(outputData);
       }
     }, 500);
@@ -118,19 +117,12 @@ function Index() {
               相对时间
               <ReadOnlyInputCopy
                 className="w-60"
-                value={
-                  outputData.relative
-                    ? outputData.relative + ' s'
-                    : outputData.relative
-                }
+                value={outputData.relative ? outputData.relative + ' s' : outputData.relative}
               />
             </div>
             <div>
               unix
-              <ReadOnlyInputCopy
-                className="w-60"
-                value={outputData.unix_time}
-              />
+              <ReadOnlyInputCopy className="w-60" value={outputData.unix_time} />
             </div>
           </div>
           <div className="flex-initial flex flex-col space-y-3">

@@ -1,27 +1,26 @@
 import toast from 'react-hot-toast';
-import {invoke} from '@tauri-apps/api/tauri';
-import {useRef, useState} from "react";
+import { invoke } from '@tauri-apps/api/tauri';
+import { useRef, useState } from 'react';
 import Button from '../../component/Button';
 import TextEditor from '../../component/TextEditor';
 
 function Index() {
-  let inputRef = useRef(null)
+  let inputRef = useRef(null);
   let [inputStr, setInputStr] = useState('');
   let [headers, setHeaders] = useState('');
 
-  const handlerEncodeJWT = async (value) => {
+  const handlerEncodeJWT = async value => {
     if (value) {
-      const res = await invoke("string_to_base64", {input: value + ''})
+      const res = await invoke('string_to_base64', { input: value + '' });
     } else {
     }
-  }
-
-  const handlerInput = e => {
-    console.log(123)
-    let value = e.target.value;
-    setInputStr(value)
   };
 
+  const handlerInput = e => {
+    console.log(123);
+    let value = e.target.value;
+    setInputStr(value);
+  };
 
   return (
     <>
@@ -36,18 +35,15 @@ function Index() {
         <div className="flex-1 bg-amber-100 flex flex-col">
           <div className="flex-1 flex flex-col">
             <p className="block">HEADERS:</p>
-            <div className="flex-1 bg-green-200 border-2">
-            </div>
+            <div className="flex-1 bg-green-200 border-2"></div>
           </div>
           <div className="flex-1 flex flex-col">
             <p className="block">PAYLOAD:</p>
-            <div className="flex-1 bg-green-200 border-2">
-            </div>
+            <div className="flex-1 bg-green-200 border-2"></div>
           </div>
           <div className="flex-1 flex flex-col">
             <p className="block">VERIFY SIGNATURE:</p>
-            <div className="flex-1 bg-green-200 border-2">
-            </div>
+            <div className="flex-1 bg-green-200 border-2"></div>
           </div>
         </div>
       </div>

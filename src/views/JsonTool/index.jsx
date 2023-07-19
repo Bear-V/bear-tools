@@ -1,6 +1,6 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import ReactJson from 'react-json-view';
-import {invoke} from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/tauri';
 import Button from '../../component/Button';
 
 function Index() {
@@ -12,8 +12,7 @@ function Index() {
     setInputStr(board_value);
     try {
       setJsonStr(JSON.parse(board_value));
-    } catch (e) {
-    }
+    } catch (e) {}
   };
   const handlerDefault = () => {
     let value = {
@@ -24,13 +23,13 @@ function Index() {
             sold: false,
             author: 'Nigel Rees',
             title: 'Sayings of the Century',
-            price: 8.95,
+            price: 8.95
           },
           {
             category: 'fiction',
             author: 'Evelyn Waugh',
             title: 'Sword of Honour',
-            price: 12.99,
+            price: 12.99
           },
           {
             category: 'fiction',
@@ -38,11 +37,11 @@ function Index() {
             title: 'The Lord of the Rings',
             act: null,
             isbn: '0-395-19395-8',
-            price: 22.99,
-          },
+            price: 22.99
+          }
         ],
-        bicycle: {color: 'red', price: 19.95},
-      },
+        bicycle: { color: 'red', price: 19.95 }
+      }
     };
     setInputStr(JSON.stringify(value));
     setJsonStr(value);
@@ -61,8 +60,7 @@ function Index() {
     try {
       value = JSON.parse(e.target.value);
       setJsonStr(value);
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
   // page element
@@ -70,15 +68,15 @@ function Index() {
     <>
       <div className="h-full flex flex-row space-x-1">
         <div className="flex-1 w-full h-full border-2 pt-2 flex flex-col space-y-2">
-          <div className="flex flex-row space-x-2 pl-2 h-6">
-            <Button click={handlerClipboard} name="使用剪切板"/>
-            <Button click={handlerDefault} name="示例"/>
-            <Button click={handlerClear} name="清空"/>
-          </div>
-          <div className="w-full h-full">
-            <textarea
-              className="p-2 w-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-200"
-              value={inputStr}
+          <div className="flex'flex-row space-x-2 pl-2 h-6">
+  '         <Button click={handlerClipboard} name="使用剪切'" />
+'           <Button click={handlerDefault} name="示例" '>
+'           <Button click={handlerClear} name="清空" '>
+'         </div>
+          <div className="w-fu'l h-full">
+  '         <textarea
+              className="p-2 '-full h-full bg-gray-50 rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-200"
+   '          value={inputStr}
               onChange={handlerInput}
             ></textarea>
           </div>
