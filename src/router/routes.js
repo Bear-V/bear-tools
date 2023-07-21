@@ -29,6 +29,13 @@ const route_list = [
         }
       },
       {
+        path: '/randomPassword',
+        component: () => import('../views/RandomPassword'),
+        meta: {
+          title: '随机密码'
+        }
+      },
+      {
         path: '/timestampTool',
         component: () => import('../views/Timestamp'),
         meta: {

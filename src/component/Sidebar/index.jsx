@@ -19,6 +19,12 @@ function GlobalSidebar() {
       imgPath: homeSvg
     },
     {
+      name: '随机密码',
+      path: '/randomPassword',
+      activeIndex: false,
+      imgPath: timestampSvg
+    },
+    {
       name: '时间戳转换',
       path: '/timestampTool',
       activeIndex: false,
