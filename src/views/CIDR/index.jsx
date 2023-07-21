@@ -1,127 +1,149 @@
 import toast from 'react-hot-toast';
 import { invoke } from '@tauri-apps/api/tauri';
 import { useState } from 'react';
-import Button from '../../component/Button';
-import TextEditor from '../../component/TextEditor';
 
 function Index() {
-  let [ipA, setIpA] = useState(0);
-  let [ipB, setIpB] = useState(0);
-  let [ipC, setIpC] = useState(0);
-  let [ipD, setIpD] = useState(0);
-  let [ipE, setIpE] = useState(0);
-  let [cidr, setCidr] = useState('');
+  let [ipA, setIpA] = useState(192);
+  let [ipB, setIpB] = useState(168);
+  let [ipC, setIpC] = useState(10);
+  let [ipD, setIpD] = useState(32);
+  let [ipE, setIpE] = useState(23);
+  let [mask, setMask] = useState('255.255.254.0');
+  let [max, setMax] = useState('192.168.11.255');
+  let [min, setMin] = useState('192.168.10.0');
+  let [size, setSize] = useState(512);
+
+  const removeLeadingZeros = (s, last, max) => {
+    if (s === '') {
+      return 0;
+    }
+    if (isNaN(Number(s))) {
+      toast.error('请输入数字');
+      return last;
+    }
+    const oldLen = s.length;
+    s = s.replace(/^0+/, ''); // 移除前导零
+    // 全为 0 的情况，留一个 0
+    if (s.length === 0 && oldLen > 0) {
+      s = 0;
+    }
+    if (s > max) {
+      s = max;
+    }
+    return s;
+  };
 
   const handlerInput = async (e, mb) => {
-    const removeLeadingZeros = (s, max) => {
-      const oldLen = s.length;
-      s = s.replace(/^0+/, ''); // 移除前导零
-      // 全为 0 的情况，留一个 0
-      if (s.length === 0 && oldLen > 0) {
-        s = 0;
-      }
-      if (s > max) {
-        s = max;
-      }
-      return s;
-    };
     let value = e.target.value;
     switch (mb) {
       case 'A':
-        value = removeLeadingZeros(value, 255);
-        setIpA(value);
+        ipA = removeLeadingZeros(value, ipA, 255);
+        setIpA(ipA);
         break;
       case 'B':
-        value = removeLeadingZeros(value, 255);
-        setIpB(value);
+        ipB = removeLeadingZeros(value, ipB, 255);
+        setIpB(ipB);
         break;
       case 'C':
-        value = removeLeadingZeros(value, 255);
-
-        setIpC(value);
+        ipC = removeLeadingZeros(value, ipC, 255);
+        setIpC(ipC);
         break;
       case 'D':
-        value = removeLeadingZeros(value, 255);
-
-        setIpD(value);
+        ipD = removeLeadingZeros(value, ipD, 255);
+        setIpD(ipD);
         break;
       case 'E':
-        value = removeLeadingZeros(value, 32);
-
-        setIpE(value);
+        ipE = removeLeadingZeros(value, ipE, 32);
+        setIpE(ipE);
         break;
       default:
         break;
     }
-
-    await handlerCheckCidr();
-  };
-
-  const handlerCheckCidr = async () => {
     let ipAddr = `${ipA || 0}.${ipB || 0}.${ipC || 0}.${ipD || 0}/${ipE || 0}`;
     console.log(ipAddr);
+    await handlerCheckCidr(ipAddr);
+  };
+
+  const handlerCheckCidr = async ipAddr => {
+    console.log('handlerCheckCidr');
     const res = await invoke('check_cidr', { input: ipAddr });
     console.log(res);
-    setCidr(JSON.stringify(res, null, 2));
+    setMask(res.mask);
+    setMax(res.max);
+    setMin(res.min);
+    setSize(res.size);
   };
 
   return (
     <>
-      <div className="m-2 flex flex-col h-full bg-amber-200 space-x-1">
-        <div className="flex-1 flex flex-col">
-          <p className="block">HEADERS:</p>
-          <div className="flex flex-row space-x-1">
-            <input
-              className="flex-1 h-11 text-center text-field"
-              type="number"
-              min="0"
-              max="255"
-              value={ipA}
-              onChange={e => handlerInput(e, 'A')}
-            />
-            <input
-              className="flex-1 h-11 text-center"
-              type="number"
-              min="0"
-              max="255"
-              value={ipB}
-              onChange={e => handlerInput(e, 'B')}
-            />
-            <input
-              className="flex-1 h-11 text-center"
-              type="number"
-              min="0"
-              max="255"
-              value={ipC}
-              onChange={e => handlerInput(e, 'C')}
-            />
-            <input
-              className="flex-1 h-11 text-center"
-              type="number"
-              min="0"
-              max="255"
-              value={ipD}
-              onChange={e => handlerInput(e, 'D')}
-            />
-            <input
-              className="flex-1 h-11 text-center"
-              type="number"
-              min="0"
-              max="32"
-              value={ipE}
-              onChange={e => handlerInput(e, 'E')}
-            />
+      <div className="m-2 flex flex-col h-full">
+        <div className="flex-1 flex flex-col bg-blue-100">
+          <div className="flex flex-row w-10/12 m-4">
+            <div className="flex flex-1 w-1/5 h-11 text-center">
+              <input
+                className="h-11 w-10/12 text-center text-4xl"
+                type="text"
+                value={ipA}
+                onInput={e => handlerInput(e, 'A')}
+              />
+              <div className="h-11 w-2/12 text-center text-field text-5xl">.</div>
+            </div>
+            <div className="flex flex-1 w-1/5 h-11 text-center">
+              <input
+                className="h-11 w-10/12 text-center text-4xl"
+                type="text"
+                value={ipB}
+                onChange={e => handlerInput(e, 'B')}
+              />
+              <div className="h-11 w-2/12 text-center text-field text-5xl">.</div>
+            </div>
+            <div className="flex flex-1 w-1/5 h-11 text-center">
+              <input
+                className="h-11 w-10/12 text-center text-4xl"
+                type="text"
+                value={ipC}
+                onChange={e => handlerInput(e, 'C')}
+              />
+              <div className="h-11 w-2/12 text-center text-field text-5xl">.</div>
+            </div>
+            <div className="flex flex-1 w-1/5 h-11 text-center">
+              <input
+                className="h-11 w-10/12 text-center text-4xl"
+                type="text"
+                value={ipD}
+                onChange={e => handlerInput(e, 'D')}
+              />
+              <div className="h-11 w-2/12 text-center text-field text-4xl">/</div>
+            </div>
+            <div className="flex flex-1 w-1/5 h-11 text-center">
+              <input
+                className="h-11 w-10/12 text-center text-4xl"
+                type="text"
+                value={ipE}
+                onChange={e => handlerInput(e, 'E')}
+              />
+            </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col">
-          <p className="block">PAYLOAD:</p>
-          <div className="flex-1 bg-green-200 border-2">
-            <textarea value={cidr} readOnly={true} />
+        <div className="flex-1 flex flex-col bg-red-200">
+          <div className="flex-1 flex flex-row border-2 space-x-3">
+            <div className="flex-col text-center">
+              <div>NETMASK（子网掩码）</div>
+              <div>{mask}</div>
+            </div>
+            <div className="flex-col text-center">
+              <div>CIDR BASE IP（基础地址）</div>
+              <div>{min}</div>
+            </div>
+            <div className="flex-col text-center">
+              <div>BROADCAST IP（广播地址）</div>
+              <div>{max}</div>
+            </div>
+            <div className="flex-col text-center">
+              <div>COUNT（数量）</div>
+              <div>{size}</div>
+            </div>
           </div>
-        </div>
-        <div className="flex-1 flex flex-col">
-          <p className="block">VERIFY SIGNATURE:</p>
-          <div className="flex-1 bg-green-200 border-2"></div>
         </div>
       </div>
     </>
