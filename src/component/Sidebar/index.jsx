@@ -108,7 +108,7 @@ function GlobalSidebar() {
           <div className="flex-1 text-sm text-gray-800 text-center select-none cursor-default">
             <a target="_blank" href="https://github.com/Bear-V/Bear-Tools" rel="noreferrer">
               {/* todo: remember modify */}
-              version:20221219
+              version:20230721
             </a>
           </div>
         </div>
