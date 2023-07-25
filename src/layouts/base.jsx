@@ -1,8 +1,8 @@
-import GlobalContent from '../../component/Content/index.jsx';
-import GlobalSidebar from '../../component/Sidebar/index.jsx';
+import GlobalContent from '../component/globalContent';
+import GlobalSidebar from '../component/globalSidebar';
 import { Toaster } from 'react-hot-toast';
 
-export default function Index() {
+function Base() {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
@@ -11,3 +11,5 @@ export default function Index() {
     </>
   );
 }
+
+export default Base;

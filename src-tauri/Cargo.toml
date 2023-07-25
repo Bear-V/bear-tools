@@ -22,7 +22,8 @@ chrono = "0.4.19" # timestamp tools
 data-encoding = "2.3.2" # base_hex tools
 ipnetwork = "0.20.0" # cidr tools
 rand = "0.8.5" # random tools
-
+url = { version = "2.4.0", features = ["serde"] }
+zxcvbn = "2"
 
 [features]
 # by default Tauri runs in production mode

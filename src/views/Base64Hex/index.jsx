@@ -22,7 +22,7 @@ function Index() {
 
   const handlerHexToBase = async value => {
     if (value) {
-      const res = await invoke('hex_to_base64', { input: value + '' });
+      const res = await invoke('hex_to_base64', { hexString: value + '' });
       setOutputData(res);
     } else {
       setOutputData('');
@@ -30,7 +30,7 @@ function Index() {
   };
   const handlerBaseToHex = async value => {
     if (value) {
-      const res = await invoke('base64_to_hex', { input: value + '' });
+      const res = await invoke('base64_to_hex', { base64String: value + '' });
       setOutputData(res);
     } else {
       setOutputData('');

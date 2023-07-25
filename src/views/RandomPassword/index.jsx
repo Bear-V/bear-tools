@@ -10,6 +10,7 @@ function Index() {
   let [hasOther, setHasOther] = useState('!@#$%^&*');
   let [count, setCount] = useState(1);
   let [passwordList, setPasswordList] = useState([]);
+  let [checkPasswordResult, setCheckPasswordResult] = useState('');
 
   let list = [];
   for (let i = 1; i <= 100; i++) {
@@ -17,14 +18,11 @@ function Index() {
   }
 
   const handlerRandomPassword = async () => {
-    console.log({
-      len: len,
-      has_low: hasLow,
-      has_upper: hasUpper,
-      has_number: hasNumber,
-      has_other: hasOther,
-      count: count
-    });
+    if (!hasLow && !hasUpper && !hasNumber && !hasOther) {
+      toast.error('请至少选择一个字符集');
+      return;
+    }
+
     const res = await invoke('random_string', {
       len,
       hasLow,
@@ -34,7 +32,11 @@ function Index() {
       count
     });
     setPasswordList(res);
-    console.log(res);
+
+    if (res.length === 1) {
+      const r = await invoke('password_check', { input: res[0] });
+      setCheckPasswordResult(JSON.stringify(r, null, 2));
+    }
   };
 
   const handleChangeCount = event => {
@@ -110,6 +112,7 @@ function Index() {
             );
           })}
         </ul>
+        <p>{checkPasswordResult}</p>
       </div>
     </>
   );

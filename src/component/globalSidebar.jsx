@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
-import homeSvg from '../../assets/icons/home.svg';
-import timestampSvg from '../../assets/icons/timestamp.svg';
-import strJsonSvg from '../../assets/icons/strJson.svg';
-import bsSvg from '../../assets/icons/baseString.svg';
-import bhSvg from '../../assets/icons/baseHex.svg';
-import cidrSvg from '../../assets/icons/cidr.svg';
-import jwtSvg from '../../assets/icons/jwt.svg';
+import homeSvg from '../assets/icons/home.svg';
+import timestampSvg from '../assets/icons/timestamp.svg';
+import strJsonSvg from '../assets/icons/strJson.svg';
+import bsSvg from '../assets/icons/baseString.svg';
+import bhSvg from '../assets/icons/baseHex.svg';
+import cidrSvg from '../assets/icons/cidr.svg';
+import jwtSvg from '../assets/icons/jwt.svg';
 
 function GlobalSidebar() {
   const navigate = useNavigate();
@@ -57,6 +57,12 @@ function GlobalSidebar() {
     {
       name: 'JWT',
       path: '/jwt',
+      activeIndex: false,
+      imgPath: jwtSvg
+    },
+    {
+      name: 'URL PARSE',
+      path: '/urlParse',
       activeIndex: false,
       imgPath: jwtSvg
     }

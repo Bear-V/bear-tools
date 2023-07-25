@@ -1,12 +1,9 @@
-import Layout from '../layouts/Base';
-import About from '../views/About.jsx';
-import ErrorPage from '../views/Error/404.jsx';
-import Home from '../views/Home';
+import Layout from '../layouts/base';
 
 const route_list = [
   {
     path: '/',
-    component: () => import('../layouts/Base'),
+    component: () => import('../layouts/base'),
     element: Layout,
     children: [
       {
@@ -16,7 +13,6 @@ const route_list = [
       {
         path: '/home',
         component: () => import('../views/Home'),
-        element: Home,
         meta: {
           title: '首页'
         }
@@ -69,20 +65,26 @@ const route_list = [
         meta: {
           title: 'CIDR'
         }
+      },
+      {
+        path: '/urlParse',
+        component: () => import('../views/urlParse'),
+        meta: {
+          title: 'url解析'
+        }
       }
     ]
   },
   {
     path: '/about',
-    component: () => import('../views/About.jsx'),
-    element: About,
+    component: () => import('../views/about'),
     meta: {
       title: '关于'
     }
   },
   {
     path: '*',
-    element: ErrorPage,
+    component: () => import('../views/404'),
     meta: {
       title: '404'
     }

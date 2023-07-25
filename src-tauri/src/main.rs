@@ -14,8 +14,10 @@ use commands::{
     bases_conversion::base_n_to_n,
     cidr::check_cidr,
     copy_board::{get_copy, set_copy},
+    password_check::password_check,
     random::random_string,
     timestamp::timestamp_format,
+    url_parse::url_parse,
 };
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -33,7 +35,9 @@ fn main() {
             get_copy,
             check_cidr,
             timestamp_format,
-            random_string
+            random_string,
+            url_parse,
+            password_check
         ])
         .menu(tauri::Menu::os_default(&context.package_info().name))
         .run(context)

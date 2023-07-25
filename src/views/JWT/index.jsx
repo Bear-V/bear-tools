@@ -1,20 +1,8 @@
-import toast from 'react-hot-toast';
 import { invoke } from '@tauri-apps/api/tauri';
-import { useRef, useState } from 'react';
-import Button from '../../component/Button';
-import TextEditor from '../../component/TextEditor';
+import { useState } from 'react';
 
 function Index() {
-  let inputRef = useRef(null);
   let [inputStr, setInputStr] = useState('');
-  let [headers, setHeaders] = useState('');
-
-  const handlerEncodeJWT = async value => {
-    if (value) {
-      const res = await invoke('string_to_base64', { input: value + '' });
-    } else {
-    }
-  };
 
   const handlerInput = e => {
     console.log(123);

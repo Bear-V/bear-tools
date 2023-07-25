@@ -3,5 +3,7 @@ pub mod base64_string;
 pub mod bases_conversion;
 pub mod cidr;
 pub mod copy_board;
+pub mod password_check;
 pub mod random;
 pub mod timestamp;
+pub mod url_parse;
