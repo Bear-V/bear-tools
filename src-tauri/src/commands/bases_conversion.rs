@@ -51,4 +51,30 @@ mod tests {
         let res = base_n_to_n("10", 2, 2);
         println!("{}", res);
     }
+
+    #[test]
+    fn basic_binary_to_decimal() {
+        assert_eq!(base_n_to_n("0000000110", 2, 10), "6");
+        assert_eq!(base_n_to_n("1000011110", 2, 10), "542");
+        assert_eq!(base_n_to_n("1111111111", 2, 10), "1023");
+    }
+
+    #[test]
+    fn big_binary_to_decimal() {
+        assert_eq!(base_n_to_n("111111111111111111111111", 2, 10), "16777215");
+        // 32 bits
+        assert_eq!(
+            base_n_to_n("11111111111111111111111111111111", 2, 10),
+            "4294967295"
+        );
+        // 64 bits
+        assert_eq!(
+            base_n_to_n(
+                "1111111111111111111111111111111111111111111111111111111111111111",
+                2,
+                10,
+            ),
+            "18446744073709551615"
+        );
+    }
 }
