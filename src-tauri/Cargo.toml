@@ -24,6 +24,7 @@ ipnetwork = "0.20.0" # cidr tools
 rand = "0.8.5" # random tools
 url = { version = "2.4.0", features = ["serde"] }
 zxcvbn = "2"
+qrcode = "0.12.0"
 
 [features]
 # by default Tauri runs in production mode

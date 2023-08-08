@@ -6,14 +6,14 @@ pub fn random_string(
     has_low: bool,
     has_upper: bool,
     has_number: bool,
-    has_other: String,
+    other_str: String,
     count: usize,
 ) -> Vec<String> {
     let mut result = vec![];
 
     for _ in 0..count {
         let random_string =
-            random_string_handle(len, has_low, has_upper, has_number, has_other.clone());
+            random_string_handle(len, has_low, has_upper, has_number, other_str.clone());
         result.push(random_string);
     }
 
@@ -25,7 +25,7 @@ fn random_string_handle(
     has_low: bool,
     has_upper: bool,
     has_number: bool,
-    has_other: String,
+    other_str: String,
 ) -> String {
     // 字典
     let mut dictionary = vec![];
@@ -48,8 +48,8 @@ fn random_string_handle(
         dictionary.append(&mut number);
     }
 
-    if has_other != "" {
-        has_other.chars().for_each(|c| dictionary.push(c));
+    if other_str != "" {
+        other_str.chars().for_each(|c| dictionary.push(c));
     }
 
     let vowels_dist = Slice::new(&dictionary).unwrap();

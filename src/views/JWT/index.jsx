@@ -1,4 +1,3 @@
-import { invoke } from '@tauri-apps/api/tauri';
 import { useState } from 'react';
 
 function Index() {

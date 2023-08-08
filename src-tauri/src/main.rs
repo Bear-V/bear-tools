@@ -3,13 +3,16 @@
     windows_subsystem = "windows"
 )]
 
+extern crate core;
+
+mod command;
 mod commands;
+mod error;
 mod window;
 
 use window::about::open_about;
 
 use commands::{
-    base64_hex::{base64_to_hex, hex_to_base64},
     base64_string::{base64_to_string, string_to_base64},
     bases_conversion::base_n_to_n,
     cidr::check_cidr,
@@ -25,9 +28,9 @@ fn main() {
     let context = tauri::generate_context!();
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
+            command::base64_to_hex,
+            command::hex_to_base64,
             open_about,
-            base64_to_hex,
-            hex_to_base64,
             string_to_base64,
             base64_to_string,
             base_n_to_n,

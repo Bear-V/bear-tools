@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../component/button.jsx';
+import Button from '@/component/button.jsx';
 import { invoke } from '@tauri-apps/api/tauri';
 
 function About() {

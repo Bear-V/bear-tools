@@ -1,5 +1,5 @@
-import GlobalContent from '../component/globalContent';
-import GlobalSidebar from '../component/globalSidebar';
+import GlobalContent from '@/component/globalContent';
+import GlobalSidebar from '@/component/globalSidebar';
 import { Toaster } from 'react-hot-toast';
 
 function Base() {

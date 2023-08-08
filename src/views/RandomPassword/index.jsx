@@ -1,13 +1,14 @@
 import toast from 'react-hot-toast';
 import { invoke } from '@tauri-apps/api/tauri';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 function Index() {
   let [len, setLen] = useState(10);
   let [hasLow, setHasLow] = useState(true);
   let [hasUpper, setHasUpper] = useState(true);
   let [hasNumber, setHasNumber] = useState(true);
-  let [hasOther, setHasOther] = useState('!@#$%^&*');
+  let [hasOther, setHasOther] = useState(true);
+  let [otherStr, setOtherStr] = useState('!@#$%^&*');
   let [count, setCount] = useState(1);
   let [passwordList, setPasswordList] = useState([]);
   let [checkPasswordResult, setCheckPasswordResult] = useState('');
@@ -23,19 +24,27 @@ function Index() {
       return;
     }
 
-    const res = await invoke('random_string', {
+    let resParams = {
       len,
       hasLow,
       hasUpper,
       hasNumber,
-      hasOther,
+      otherStr,
       count
-    });
+    };
+
+    if (!hasOther) {
+      resParams.otherStr = '';
+    }
+
+    const res = await invoke('random_string', resParams);
     setPasswordList(res);
 
     if (res.length === 1) {
       const r = await invoke('password_check', { input: res[0] });
       setCheckPasswordResult(JSON.stringify(r, null, 2));
+    } else {
+      setCheckPasswordResult('');
     }
   };
 
@@ -54,22 +63,23 @@ function Index() {
         <ul className="m-1 flex flex-row bg-amber-100 p-2">
           <li className="flex-1">所用字符:</li>
           <li className="flex-auto">
-            <input type="checkbox" checked={hasLow} onChange={e => setHasLow(!hasLow)} />
+            <input type="checkbox" checked={hasLow} onChange={() => setHasLow(!hasLow)} />
             <span>a-z</span>
           </li>
           <li className="flex-auto">
-            <input type="checkbox" checked={hasUpper} onChange={e => setHasUpper(!hasUpper)} />
+            <input type="checkbox" checked={hasUpper} onChange={() => setHasUpper(!hasUpper)} />
             <span>A-Z</span>
           </li>
           <li className="flex-auto">
-            <input type="checkbox" checked={hasNumber} onChange={e => setHasNumber(!hasNumber)} />
+            <input type="checkbox" checked={hasNumber} onChange={() => setHasNumber(!hasNumber)} />
             <span>0-9</span>
           </li>
           <li className="flex-auto">
+            <input type="checkbox" checked={hasOther} onChange={() => setHasOther(!hasOther)} />
             <input
               type="text"
-              defaultValue={hasOther}
-              onChange={e => setHasOther(e.target.value)}
+              defaultValue={otherStr}
+              onChange={e => setOtherStr(e.target.value)}
             />
             <span>其他字符</span>
           </li>

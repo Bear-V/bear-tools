@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactJson from 'react-json-view';
 import { invoke } from '@tauri-apps/api/tauri';
-import Button from '../../component/Button';
+import Button from '@/component/Button';
 
 function Index() {
   let [inputStr, setInputStr] = useState('请输入JSON字符串');
