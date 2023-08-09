@@ -30,3 +30,4 @@ yarn.lock
 
 # rust
 Cargo.lock
+*.txt

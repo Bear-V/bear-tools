@@ -13,7 +13,7 @@ mod window;
 use window::about::open_about;
 
 use commands::{
-    base64_string::{base64_to_string, string_to_base64},
+    base64_conversion::read_file,
     bases_conversion::base_n_to_n,
     cidr::check_cidr,
     copy_board::{get_copy, set_copy},
@@ -28,11 +28,8 @@ fn main() {
     let context = tauri::generate_context!();
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            command::base64_to_hex,
-            command::hex_to_base64,
+            read_file,
             open_about,
-            string_to_base64,
-            base64_to_string,
             base_n_to_n,
             set_copy,
             get_copy,
