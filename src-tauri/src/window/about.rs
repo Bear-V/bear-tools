@@ -1,6 +1,6 @@
-use tauri::{AppHandle, WindowBuilder, WindowUrl, Wry};
+use tauri::{AppHandle, command, WindowBuilder, WindowUrl, Wry};
 
-#[tauri::command]
+#[command]
 pub async fn open_about(handle: AppHandle<Wry>) {
     WindowBuilder::new(&handle, "about", WindowUrl::App("/about".into()))
         .inner_size(400.0, 300.0)

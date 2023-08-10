@@ -1,7 +1,7 @@
+use crate::error::BearToolError;
 use ipnetwork::Ipv4Network;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
-// use serde_json;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CidrRes {
@@ -11,9 +11,8 @@ pub struct CidrRes {
     mask: String,
 }
 
-#[tauri::command]
-pub fn check_cidr(input: String) -> CidrRes {
-    let res_network = Ipv4Network::from_str(input.as_str()).unwrap();
+pub fn check_cidr(input: String) -> Result<CidrRes, BearToolError> {
+    let res_network = Ipv4Network::from_str(input.as_str())?;
 
     let min = res_network.network().to_string();
     let max = res_network.broadcast().to_string();
@@ -22,12 +21,12 @@ pub fn check_cidr(input: String) -> CidrRes {
     if res_network.prefix() != 0 {
         size = res_network.size() as u64;
     }
-    CidrRes {
+    Ok(CidrRes {
         min,
         max,
         size,
         mask,
-    }
+    })
 }
 
 #[cfg(test)]

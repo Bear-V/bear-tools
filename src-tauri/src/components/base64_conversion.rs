@@ -1,5 +1,8 @@
-use data_encoding::{DecodeError, BASE64, HEXLOWER};
+use crate::error::BearToolError;
+use data_encoding::{BASE64, HEXLOWER};
 use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::path::Path;
 
 /// string to base64
 pub fn string_to_base64(string: String) -> String {
@@ -7,31 +10,40 @@ pub fn string_to_base64(string: String) -> String {
 }
 
 /// base64 to string
-pub fn base64_to_string(base64_string: String) -> Result<String, DecodeError> {
+pub fn base64_to_string(base64_string: String) -> Result<String, BearToolError> {
     let base_vec = BASE64.decode(base64_string.as_bytes())?;
-    let res = String::from_utf8_lossy(base_vec.as_slice()).into_owned();
+    let res = String::from_utf8_lossy(&base_vec).into_owned();
     Ok(res)
 }
 
 /// hex to base64
-pub fn hex_to_base64(hex_string: String) -> Result<String, DecodeError> {
+pub fn hex_to_base64(hex_string: String) -> Result<String, BearToolError> {
     let base_vec = HEXLOWER.decode(hex_string.as_bytes())?;
-    let res = BASE64.encode(base_vec.as_slice());
+    let res = BASE64.encode(&base_vec);
     Ok(res)
 }
 
 /// base64 to hex
-pub fn base64_to_hex(base64_string: String) -> Result<String, DecodeError> {
+pub fn base64_to_hex(base64_string: String) -> Result<String, BearToolError> {
     let base_vec = BASE64.decode(base64_string.as_bytes())?;
-    let res = HEXLOWER.encode(base_vec.as_slice());
+    let res = HEXLOWER.encode(&base_vec);
     Ok(res)
 }
 
-#[tauri::command]
-pub fn read_file(file: String) -> String {
-    // let file = File::open(file).unwrap();
-    println!("file: {:?}", file);
-    return "file".to_string();
+/// image to base64
+pub fn image_to_base64(image_path: impl AsRef<Path>) -> Result<String, BearToolError> {
+    let file = File::open(image_path)?;
+    let mut buf_reader = BufReader::new(file);
+    let input = buf_reader.fill_buf()?;
+    if !infer::is_image(input) {
+        return Err(BearToolError {
+            category: "image".to_string(),
+            message: "not a image".to_string(),
+        });
+    }
+
+    let res = format!("data:image/jpeg;base64,{}", BASE64.encode(input));
+    Ok(res)
 }
 
 #[cfg(test)]
