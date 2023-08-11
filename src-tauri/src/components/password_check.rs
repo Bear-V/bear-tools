@@ -9,9 +9,8 @@ pub struct CheckResult {
     suggestions: Vec<String>,
 }
 
-#[tauri::command]
-pub fn password_check(input: String) -> CheckResult {
-    let password_res = zxcvbn(&input, &[]);
+pub fn check(password: String) -> CheckResult {
+    let password_res = zxcvbn(&password, &[]);
     match password_res {
         Ok(res) => {
             let score = res.score();
@@ -70,14 +69,14 @@ mod tests {
 
     #[test]
     fn password_invalid_should_return_5() {
-        let res = password_check("".to_string());
+        let res = check("".to_string());
         println!("{:?}", res);
         assert_eq!(res.score, 5);
     }
 
     #[test]
     fn password_too_short_should_return_0() {
-        let res = password_check("password".to_string());
+        let res = check("password".to_string());
         println!("{:?}", res);
         assert_eq!(res.score, 0);
     }

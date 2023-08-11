@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
-import { invoke } from '@tauri-apps/api/tauri';
 import { useState } from 'react';
 import Button from '@/component/Button';
+import { run, StringToBase64, Base64ToString, GetCopy, SetCopy } from '@/commands/invake.js';
 
 function Index() {
   const [inputData, setInputData] = useState('');
@@ -21,20 +21,12 @@ function Index() {
   };
 
   const handlerStrToBase64 = async value => {
-    if (value) {
-      const res = await invoke('string_to_base64', { input: value + '' });
-      setOutputData(res);
-    } else {
-      setOutputData('');
-    }
+    const res = await run(StringToBase64, { string: value + '' });
+    setOutputData(res);
   };
   const handlerBase64ToStr = async value => {
-    if (value) {
-      const res = await invoke('base64_to_string', { input: value + '' });
-      setOutputData(res);
-    } else {
-      setOutputData('');
-    }
+    const res = await run(Base64ToString, { base64String: value + '' });
+    setOutputData(res);
   };
   const handlerInputChange = async e => {
     let value = e.target.value;
@@ -58,7 +50,7 @@ function Index() {
   };
 
   const handlerClipboard = async () => {
-    const board_value = await invoke('get_copy');
+    const board_value = await run(GetCopy);
     setInputData(board_value);
     if (encodeMethod) {
       await handlerBase64ToStr(board_value);
@@ -68,7 +60,7 @@ function Index() {
   };
 
   const handlerOutputSetCopy = async () => {
-    await invoke('set_copy', { input: outputData + '' });
+    await run(SetCopy, { input: outputData + '' });
     toast.success('复制成功');
   };
 

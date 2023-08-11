@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
-import { invoke } from '@tauri-apps/api/tauri';
 import { useState } from 'react';
+import { PasswordCheck, RandomString, run } from '@/commands/invake.js';
 
 function Index() {
   let [len, setLen] = useState(10);
@@ -37,11 +37,11 @@ function Index() {
       resParams.otherStr = '';
     }
 
-    const res = await invoke('random_string', resParams);
+    const res = await run(RandomString, resParams);
     setPasswordList(res);
 
     if (res.length === 1) {
-      const r = await invoke('password_check', { input: res[0] });
+      const r = await run(PasswordCheck, { password: res[0] });
       setCheckPasswordResult(JSON.stringify(r, null, 2));
     } else {
       setCheckPasswordResult('');

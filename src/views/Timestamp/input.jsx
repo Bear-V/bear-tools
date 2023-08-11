@@ -1,9 +1,9 @@
-import { invoke } from '@tauri-apps/api/tauri';
 import toast from 'react-hot-toast';
+import { SetCopy, run } from '@/commands/invake.js';
 
 function ReadOnlyInputCopy({ className, value }) {
   const handlerCopy = async () => {
-    await invoke('set_copy', { input: value + '' });
+    await run(SetCopy, { input: value + '' });
     toast.success('复制成功');
   };
   return (

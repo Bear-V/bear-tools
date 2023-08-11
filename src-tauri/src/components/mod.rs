@@ -5,4 +5,4 @@ pub mod copy_board;
 pub mod password_check;
 pub mod random;
 pub mod timestamp;
-pub mod url_parse;
+pub mod url;

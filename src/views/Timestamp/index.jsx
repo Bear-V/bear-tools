@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { invoke } from '@tauri-apps/api/tauri';
+import toast from 'react-hot-toast';
 import ReadOnlyInputCopy from './input.jsx';
+import { GetCopy, run, TimestampFormat } from '@/commands/invake.js';
 
 function Index() {
   const timer = useRef();
@@ -25,7 +25,7 @@ function Index() {
   let [outputData, setOutputData] = useState(timestampFormat);
 
   const handlerCopy = async () => {
-    const copy_data = await invoke('get_copy');
+    const copy_data = await run(GetCopy);
     if (!isNaN(Number(copy_data))) {
       setInputTime(copy_data);
       await timeToDate(currentTime);
@@ -40,10 +40,10 @@ function Index() {
 
   const timeToDate = async e => {
     if (!isNaN(Number(e))) {
-      const format_date = await invoke('timestamp_format', {
+      const format_date = await run(TimestampFormat, {
         input: e
       });
-      setOutputData(JSON.parse(format_date));
+      setOutputData(format_date);
     }
   };
 

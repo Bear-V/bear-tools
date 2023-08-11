@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import ReactJson from 'react-json-view';
-import { invoke } from '@tauri-apps/api/tauri';
 import Button from '@/component/Button';
+import { GetCopy, run } from '@/commands/invake.js';
 
 function Index() {
   let [inputStr, setInputStr] = useState('请输入JSON字符串');
   let [jsonStr, setJsonStr] = useState({});
 
   const handlerClipboard = async () => {
-    const board_value = await invoke('get_copy');
+    const board_value = await run(GetCopy);
     setInputStr(board_value);
     try {
       setJsonStr(JSON.parse(board_value));

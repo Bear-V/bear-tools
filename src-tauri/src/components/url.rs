@@ -10,10 +10,9 @@ pub struct UrlParse {
     query: String,
 }
 
-#[tauri::command]
-pub fn url_parse(input: String) -> UrlParse {
+pub fn parse(input: String) -> UrlParse {
     let result = Url::parse(input.as_str());
-    println!("{:?}", result);
+
     let url = result.unwrap();
     let scheme = url.scheme();
     let host = url.host_str();
@@ -36,19 +35,19 @@ mod tests {
 
     #[test]
     fn url_parse_should_work() {
-        let res = url_parse("https://www.baidu.com:3000/app?c=1&b=2".to_string());
+        let res = parse("https://www.baidu.com:3000/app?c=1&b=2".to_string());
         println!("{:?}", res);
     }
 
     #[test]
     fn example_url_parse_should_work() {
-        let res = url_parse("https://www.baidu.com".to_string());
+        let res = parse("https://www.baidu.com".to_string());
         println!("{:?}", res);
     }
 
     #[test]
     fn simple_url_parse_should_work() {
-        let res = url_parse("www.baidu.com".to_string());
+        let res = parse("www.baidu.com".to_string());
         println!("{:?}", res);
     }
 }

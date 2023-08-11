@@ -1,13 +1,11 @@
 use chrono::prelude::*;
 use chrono::Duration;
 use serde::{Deserialize, Serialize};
-use serde_json;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct TimeFormat {
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct TimeFormat {
     utc: String,
     local: String,
-    // #[serde(rename = "unixTime")]
     unix_time: i64,
     day_of_year: i64,
     week_of_year: i64,
@@ -17,8 +15,7 @@ struct TimeFormat {
     c_format: String,
 }
 
-#[tauri::command]
-pub fn timestamp_format(input: i64) -> String {
+pub fn format(input: i64) -> TimeFormat {
     let utc_dt = Utc.timestamp_millis_opt(input).unwrap();
     let local_dt = Local.timestamp_millis_opt(input).unwrap();
     let local = local_dt.to_rfc2822();
@@ -45,7 +42,7 @@ pub fn timestamp_format(input: i64) -> String {
     let b_format = local_dt.format("%Y/%m/%d %H:%M:%S").to_string();
     let c_format = local_dt.format("%Y年%m月%d日 %H时%M分%S秒").to_string();
 
-    let time_format = TimeFormat {
+    TimeFormat {
         utc,
         local,
         unix_time,
@@ -55,9 +52,7 @@ pub fn timestamp_format(input: i64) -> String {
         a_format,
         b_format,
         c_format,
-    };
-
-    serde_json::to_string(&time_format).unwrap()
+    }
 }
 
 #[cfg(test)]
@@ -66,8 +61,21 @@ mod tests {
 
     #[test]
     fn test_timestamp_format_handler() {
-        let format_date = timestamp_format(1669192819000);
-        println!("{}", format_date);
-        assert_eq!(format_date, "{\"utc\":\"2022-11-23T08:40:19Z\",\"local\":\"Wed, 23 Nov 2022 16:40:19 +0800\",\"unix_time\":1669192819,\"day_of_year\":326,\"week_of_year\":47,\"is_leap_year\":false,\"a_format\":\"2022-11-23 16:40:19\",\"b_format\":\"2022/11/23 16:40:19\",\"c_format\":\"2022年11月23日 16时40分19秒\"}")
+        let format_date = format(1669192819000);
+        println!("{:?}", format_date);
+        assert_eq!(
+            format_date,
+            TimeFormat {
+                utc: "2022-11-23T08:40:19Z".to_string(),
+                local: "Wed, 23 Nov 2022 16:40:19 +0800".to_string(),
+                unix_time: 1669192819,
+                day_of_year: 326,
+                week_of_year: 47,
+                is_leap_year: false,
+                a_format: "2022-11-23 16:40:19".to_string(),
+                b_format: "2022/11/23 16:40:19".to_string(),
+                c_format: "2022年11月23日 16时40分19秒".to_string(),
+            }
+        );
     }
 }

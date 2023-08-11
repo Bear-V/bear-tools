@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
-import { invoke } from '@tauri-apps/api/tauri';
 import { useState } from 'react';
+import { CheckCidr, run } from '@/commands/invake.js';
 
 function Index() {
   let [ipA, setIpA] = useState(192);
@@ -60,68 +60,52 @@ function Index() {
         break;
     }
     let ipAddr = `${ipA || 0}.${ipB || 0}.${ipC || 0}.${ipD || 0}/${ipE || 0}`;
-    console.log(ipAddr);
     await handlerCheckCidr(ipAddr);
   };
 
   const handlerCheckCidr = async ipAddr => {
-    console.log('handlerCheckCidr');
-    const res = await invoke('check_cidr', { input: ipAddr });
-    console.log(res);
+    const res = await run(CheckCidr, { input: ipAddr });
+
     setMask(res.mask);
     setMax(res.max);
     setMin(res.min);
     setSize(res.size);
   };
 
+  const inputBox = (value, onChange) => {
+    return (
+      <input
+        className="h-11 w-10/12 text-center text-4xl border-2 border-blue-200 active:border-blue-400"
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+    );
+  };
+
   return (
     <>
       <div className="m-2 flex flex-col h-full">
-        <div className="flex-1 flex flex-col bg-blue-100">
+        <div className="flex-none h-2/5 flex flex-col justify-center items-center bg-blue-100">
           <div className="flex flex-row w-10/12 m-4">
             <div className="flex flex-1 w-1/5 h-11 text-center">
-              <input
-                className="h-11 w-10/12 text-center text-4xl"
-                type="text"
-                value={ipA}
-                onInput={e => handlerInput(e, 'A')}
-              />
+              {inputBox(ipA, e => handlerInput(e, 'A'))}
               <div className="h-11 w-2/12 text-center text-field text-5xl">.</div>
             </div>
             <div className="flex flex-1 w-1/5 h-11 text-center">
-              <input
-                className="h-11 w-10/12 text-center text-4xl"
-                type="text"
-                value={ipB}
-                onChange={e => handlerInput(e, 'B')}
-              />
+              {inputBox(ipB, e => handlerInput(e, 'B'))}
               <div className="h-11 w-2/12 text-center text-field text-5xl">.</div>
             </div>
             <div className="flex flex-1 w-1/5 h-11 text-center">
-              <input
-                className="h-11 w-10/12 text-center text-4xl"
-                type="text"
-                value={ipC}
-                onChange={e => handlerInput(e, 'C')}
-              />
+              {inputBox(ipC, e => handlerInput(e, 'C'))}
               <div className="h-11 w-2/12 text-center text-field text-5xl">.</div>
             </div>
             <div className="flex flex-1 w-1/5 h-11 text-center">
-              <input
-                className="h-11 w-10/12 text-center text-4xl"
-                type="text"
-                value={ipD}
-                onChange={e => handlerInput(e, 'D')}
-              />
+              {inputBox(ipD, e => handlerInput(e, 'D'))}
               <div className="h-11 w-2/12 text-center text-field text-4xl">/</div>
             </div>
             <div className="flex flex-1 w-1/5 h-11 text-center">
-              <input
-                className="h-11 w-10/12 text-center text-4xl"
-                type="text"
-                value={ipE}
-                onChange={e => handlerInput(e, 'E')}
-              />
+              {inputBox(ipE, e => handlerInput(e, 'E'))}
             </div>
           </div>
         </div>

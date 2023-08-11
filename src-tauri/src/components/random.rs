@@ -1,6 +1,5 @@
 use rand::{distributions::Slice, thread_rng, Rng};
 
-#[tauri::command]
 pub fn random_string(
     len: usize,
     has_low: bool,

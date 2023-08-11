@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { invoke } from '@tauri-apps/api/tauri';
 import { useState } from 'react';
 import Button from '@/component/Button';
-import { run, hexToBase64, base64ToHex } from '@/commands/invake.js';
+import { run, HexToBase64, Base64ToHex } from '@/commands/invake.js';
 
 function Index() {
   const [inputData, setInputData] = useState('');
@@ -22,11 +22,11 @@ function Index() {
   };
 
   const handlerHexToBase = async value => {
-    const res = await run(hexToBase64, { hexString: value });
+    const res = await run(HexToBase64, { hexString: value });
     setOutputData(res);
   };
   const handlerBaseToHex = async value => {
-    const res = await run(base64ToHex, { base64String: value });
+    const res = await run(Base64ToHex, { base64String: value });
     setOutputData(res);
   };
   const handlerInputChange = async e => {
