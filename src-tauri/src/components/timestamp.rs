@@ -55,6 +55,13 @@ pub fn format(input: i64) -> TimeFormat {
     }
 }
 
+pub fn parse(input: &str) -> i64 {
+    // 将 %Y-%m-%d %H:%M:%S 格式转换为时间戳
+    let naive_time = NaiveDateTime::parse_from_str(input, "%Y-%m-%d %H:%M:%S").unwrap();
+    let local_time: DateTime<Local> = Local.from_local_datetime(&naive_time).unwrap();
+    local_time.timestamp_millis()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -77,5 +84,12 @@ mod tests {
                 c_format: "2022年11月23日 16时40分19秒".to_string(),
             }
         );
+    }
+
+    #[test]
+    fn test_parse_should_work() {
+        let i = parse("2022-11-23 16:40:19");
+        println!("{:?}", i);
+        assert_eq!(i, 1669192819000);
     }
 }

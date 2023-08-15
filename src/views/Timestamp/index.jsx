@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import ReadOnlyInputCopy from './input.jsx';
-import { GetCopy, run, TimestampFormat } from '@/commands/invake.js';
+import { GetCopy, run, TimestampFormat, TimestampParse } from '@/commands/invake.js';
 
 function Index() {
   const timer = useRef();
@@ -10,6 +10,7 @@ function Index() {
     timestampUnit === 'ms' ? Date.now() : Math.ceil(Date.now() / 1000)
   );
   let [inputTime, setInputTime] = useState('');
+  let [inputFormatTime, setInputFormatTime] = useState('');
   let timestampFormat = {
     utc: '',
     local: '',
@@ -49,6 +50,11 @@ function Index() {
 
   const handlerChange = async e => {
     setInputTime(e.target.value);
+    await timeToDate(Number(e.target.value));
+  };
+
+  const handlerFormatChange = async e => {
+    setInputFormatTime(e.target.value);
     await timeToDate(Number(e.target.value));
   };
 
@@ -144,6 +150,16 @@ function Index() {
             <ReadOnlyInputCopy className="w-56" value={outputData.a_format} />
             <ReadOnlyInputCopy className="w-56" value={outputData.b_format} />
             <ReadOnlyInputCopy className="w-56" value={outputData.c_format} />
+          </div>
+        </div>
+        <div className="m-2 flex flex-row">
+          <input type="text" onChange={handlerChange} value={inputFormatTime} />
+          <div className="pl-4">
+            <span>单位：</span>
+            <select disabled={true} onChange={handlerChangeTimestampUint}>
+              <option>MS</option>
+              <option>S</option>
+            </select>
           </div>
         </div>
       </div>

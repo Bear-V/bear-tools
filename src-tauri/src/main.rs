@@ -27,6 +27,7 @@ fn main() {
             commands::password_check,
             commands::random_string,
             commands::timestamp_format,
+            commands::timestamp_parse,
             commands::url_parse,
             window::about::open_about
         ])

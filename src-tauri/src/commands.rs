@@ -84,6 +84,11 @@ pub fn timestamp_format(input: i64) -> TimeFormat {
 }
 
 #[command]
+pub fn timestamp_parse(input: String) -> i64 {
+    timestamp::parse(input.as_str())
+}
+
+#[command]
 pub fn url_parse(input: String) -> UrlParse {
     url::parse(input)
 }
