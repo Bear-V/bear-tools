@@ -20,8 +20,10 @@ function About() {
       // defaultPath: await appDataDir()
     });
     console.log(filepath);
-    let res = await run(ImageToBase64, { imagePath: filepath });
-    console.log(res);
+    if (filepath) {
+      let res = await run(ImageToBase64, { imagePath: filepath });
+      console.log(res);
+    }
   }
 
   return (

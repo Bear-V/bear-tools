@@ -22,13 +22,25 @@ export const UrlParse = 'url_parse';
 export const OpenAbout = 'open_about';
 
 export async function run(cmd, args) {
-  try {
-    return await invoke(cmd, args);
-  } catch (err) {
-    let message = err;
-    if (err.category && err.message) {
-      message = `[${err.category}]${err.message}`;
+  const isTauri = handleIsTauri();
+  console.log(isTauri);
+  if (isTauri) {
+    try {
+      return await invoke(cmd, args);
+    } catch (err) {
+      let message = err;
+      if (err.category && err.message) {
+        message = `[${err.category}]${err.message}`;
+      }
+      toast.error(message);
     }
-    toast.error(message);
+  } else {
+    toast.error('功能开发中');
   }
 }
+
+const handleIsTauri = () => {
+  return Boolean(
+    typeof window !== 'undefined' && window !== undefined && window.__TAURI_IPC__ !== undefined
+  );
+};

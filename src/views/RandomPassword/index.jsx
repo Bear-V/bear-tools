@@ -38,9 +38,11 @@ function Index() {
     }
 
     const res = await run(RandomString, resParams);
-    setPasswordList(res);
+    if (res.length) {
+      setPasswordList(res);
+    }
 
-    if (res.length === 1) {
+    if (res && res.length === 1) {
       const r = await run(PasswordCheck, { password: res[0] });
       setCheckPasswordResult(JSON.stringify(r, null, 2));
     } else {

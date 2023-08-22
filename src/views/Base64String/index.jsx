@@ -69,7 +69,6 @@ function Index() {
       setInputData(outputData);
       await handlerStrToBase64(outputData);
     }
-    toast.success(`更换方法为${encodeMethod ? 'BASE64转STRING' : 'STRING转BASE64'}`);
   };
 
   useEffect(() => {

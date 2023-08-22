@@ -62,6 +62,7 @@ function Index() {
     setEncodeMethod(!encodeMethod);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const changeMethod = async () => {
     if (encodeMethod) {
       setInputData(outputData);
@@ -70,7 +71,6 @@ function Index() {
       setInputData(outputData);
       await handlerHexToBase(outputData);
     }
-    toast.success(`更换方法为${encodeMethod ? 'BASE64转HEX' : 'HEX转BASE64'}`);
   };
 
   useEffect(() => {
