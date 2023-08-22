@@ -16,10 +16,10 @@ export const PasswordCheck = 'password_check';
 export const RandomString = 'random_string';
 export const TimestampFormat = 'timestamp_format';
 export const TimestampParse = 'timestamp_parse';
-export const urlParse = 'url_parse';
+export const UrlParse = 'url_parse';
 
 // tauri new window
-export const aboutWindow = 'about_window';
+export const OpenAbout = 'open_about';
 
 export async function run(cmd, args) {
   try {

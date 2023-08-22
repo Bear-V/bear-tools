@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { invoke } from '@tauri-apps/api/tauri';
 import homeSvg from '@/assets/icons/home.svg';
 import timestampSvg from '@/assets/icons/timestamp.svg';
 import strJsonSvg from '@/assets/icons/strJson.svg';
@@ -8,6 +7,7 @@ import bsSvg from '@/assets/icons/baseString.svg';
 import bhSvg from '@/assets/icons/baseHex.svg';
 import cidrSvg from '@/assets/icons/cidr.svg';
 import jwtSvg from '@/assets/icons/jwt.svg';
+import { run, OpenAbout } from '@/commands/invake.js';
 
 function GlobalSidebar() {
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ function GlobalSidebar() {
         <div className="flex flex-col justify-center m-2">
           <div
             className="flex-1 bg-gray-400 rounded-lg text-sm text-center text-gray-800 select-none cursor-pointer mx-10"
-            onClick={() => invoke('open_about')}
+            onClick={() => run(OpenAbout)}
           >
             关于
           </div>

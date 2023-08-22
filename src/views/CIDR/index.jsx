@@ -86,7 +86,7 @@ function Index() {
   return (
     <>
       <div className="m-2 flex flex-col h-full">
-        <div className="flex-none h-2/5 flex flex-col justify-center items-center bg-blue-100">
+        <div className="flex-none h-2/5 flex flex-col justify-center items-center">
           <div className="flex flex-row w-10/12 m-4">
             <div className="flex flex-1 w-1/5 h-11 text-center">
               {inputBox(ipA, e => handlerInput(e, 'A'))}
@@ -109,8 +109,8 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col bg-red-200">
-          <div className="flex-1 flex flex-row border-2 space-x-3">
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-row space-x-3">
             <div className="flex-col text-center">
               <div>NETMASK（子网掩码）</div>
               <div>{mask}</div>

@@ -1,8 +1,7 @@
 import toast from 'react-hot-toast';
-import { invoke } from '@tauri-apps/api/tauri';
 import { useEffect, useState } from 'react';
 import Button from '@/component/Button';
-import { run, HexToBase64, Base64ToHex } from '@/commands/invake.js';
+import { run, HexToBase64, Base64ToHex, GetCopy, SetCopy } from '@/commands/invake.js';
 
 function Index() {
   const [inputData, setInputData] = useState('');
@@ -40,7 +39,7 @@ function Index() {
   };
 
   const handlerClipboard = async () => {
-    const board_value = await invoke('get_copy');
+    const board_value = await run(GetCopy);
     setInputData(board_value);
     if (encodeMethod) {
       await handlerBaseToHex(board_value);
@@ -50,7 +49,7 @@ function Index() {
   };
 
   const handlerOutputSetCopy = async () => {
-    await invoke('set_copy', { input: outputData + '' });
+    await run(SetCopy, { input: outputData });
     toast.success('复制成功');
   };
 
