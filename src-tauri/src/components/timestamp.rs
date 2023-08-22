@@ -1,5 +1,6 @@
+use crate::error::BearToolError;
 use chrono::prelude::*;
-use chrono::Duration;
+use chrono::{Duration};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
@@ -55,11 +56,11 @@ pub fn format(input: i64) -> TimeFormat {
     }
 }
 
-pub fn parse(input: &str) -> i64 {
+pub fn parse(input: &str) -> Result<i64, BearToolError> {
     // 将 %Y-%m-%d %H:%M:%S 格式转换为时间戳
-    let naive_time = NaiveDateTime::parse_from_str(input, "%Y-%m-%d %H:%M:%S").unwrap();
+    let naive_time = NaiveDateTime::parse_from_str(input, "%Y-%m-%d %H:%M:%S")?;
     let local_time: DateTime<Local> = Local.from_local_datetime(&naive_time).unwrap();
-    local_time.timestamp_millis()
+    Ok(local_time.timestamp_millis())
 }
 
 #[cfg(test)]

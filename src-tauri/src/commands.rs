@@ -1,11 +1,12 @@
 use crate::{
     components::{
         base64_conversion, cidr, cidr::CidrRes, copy_board, number_conversion, password_check,
-        password_check::CheckResult, random, timestamp, timestamp::TimeFormat, url, url::UrlParse,
+        password_check::CheckResult, random, timestamp, timestamp::TimeFormat, url_parse,
     },
     error::BearToolError,
 };
 use tauri::command;
+use url::Url;
 
 pub type CommandResult<T> = Result<T, BearToolError>;
 
@@ -84,11 +85,12 @@ pub fn timestamp_format(input: i64) -> TimeFormat {
 }
 
 #[command]
-pub fn timestamp_parse(input: String) -> i64 {
-    timestamp::parse(input.as_str())
+pub fn timestamp_parse(input: String) -> CommandResult<i64> {
+    let res = timestamp::parse(input.as_str())?;
+    Ok(res)
 }
 
 #[command]
-pub fn url_parse(input: String) -> UrlParse {
-    url::parse(input)
+pub fn url_parse(input: String) -> CommandResult<Url> {
+    url_parse::parse(input)
 }

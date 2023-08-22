@@ -32,3 +32,21 @@ impl From<ipnetwork::IpNetworkError> for BearToolError {
         }
     }
 }
+
+impl From<url::ParseError> for BearToolError {
+    fn from(error: url::ParseError) -> Self {
+        BearToolError {
+            category: "urlParse".to_string(),
+            message: error.to_string(),
+        }
+    }
+}
+
+impl From<chrono::ParseError> for BearToolError {
+    fn from(error: chrono::ParseError) -> Self {
+        BearToolError {
+            category: "chronoParse".to_string(),
+            message: error.to_string(),
+        }
+    }
+}

@@ -9,8 +9,10 @@ function Index() {
   let [currentTime, setCurrentTime] = useState(
     timestampUnit === 'ms' ? Date.now() : Math.ceil(Date.now() / 1000)
   );
-  let [inputTime, setInputTime] = useState('');
-  let [inputFormatTime, setInputFormatTime] = useState('');
+  let [inputTime, setInputTime] = useState(0);
+  let [inputFormatTime, setInputFormatTime] = useState('2023-08-22 11:11:11');
+  let [outputFormatData, setOutputFormatData] = useState('');
+
   let timestampFormat = {
     utc: '',
     local: '',
@@ -29,37 +31,31 @@ function Index() {
     const copy_data = await run(GetCopy);
     if (!isNaN(Number(copy_data))) {
       setInputTime(copy_data);
-      await timeToDate(currentTime);
     } else {
       toast.error('剪切板数据不是有效数字');
     }
   };
   const handlerSY = async () => {
+    console.log(currentTime);
     setInputTime(currentTime);
-    await timeToDate(currentTime);
   };
 
-  const timeToDate = async e => {
-    if (!isNaN(Number(e))) {
-      const format_date = await run(TimestampFormat, {
-        input: e
-      });
-      setOutputData(format_date);
-    }
+  const timeToDate = async () => {
+    console.log(inputTime);
+    const format_date = await run(TimestampFormat, {
+      input: Number(inputTime)
+    });
+    setOutputData(format_date);
   };
 
   const handlerChange = async e => {
-    setInputTime(e.target.value);
-    await timeToDate(Number(e.target.value));
-  };
-
-  const handlerFormatChange = async e => {
-    setInputFormatTime(e.target.value);
-    await timeToDate(Number(e.target.value));
+    if (!isNaN(Number(e.target.value))) {
+      setInputTime(e.target.value);
+    }
   };
 
   const handlerClear = () => {
-    setInputTime('');
+    setInputTime(0);
     setOutputData(timestampFormat);
   };
 
@@ -69,6 +65,17 @@ function Index() {
       setInputTime(Math.ceil(inputTime / 1000));
     }
   }
+
+  const handlerFormatChange = e => {
+    setInputFormatTime(e.target.value);
+  };
+
+  const handlerFormat = async () => {
+    const format_date = await run(TimestampParse, {
+      input: inputFormatTime
+    });
+    setOutputFormatData(format_date);
+  };
 
   useEffect(() => {
     timer.current = setInterval(() => {
@@ -82,10 +89,16 @@ function Index() {
         setOutputData(outputData);
       }
     }, 500);
+
     return () => {
       clearTimeout(timer.current);
     };
   }, [timestampUnit, outputData]);
+
+  useEffect(() => {
+    if (inputTime === 0 || isNaN(Number(inputTime))) return;
+    timeToDate();
+  }, [inputTime]);
 
   return (
     <>
@@ -97,7 +110,7 @@ function Index() {
           <button onClick={handlerClear}>清空</button>
         </div>
         <div className="m-2 flex flex-row">
-          <input type="text" onChange={handlerChange} value={inputTime} />
+          <input type="text" onInput={handlerChange} value={inputTime} />
           <div className="pl-4">
             <span>单位：</span>
             <select disabled={true} onChange={handlerChangeTimestampUint}>
@@ -152,15 +165,14 @@ function Index() {
             <ReadOnlyInputCopy className="w-56" value={outputData.c_format} />
           </div>
         </div>
-        <div className="m-2 flex flex-row">
-          <input type="text" onChange={handlerChange} value={inputFormatTime} />
-          <div className="pl-4">
-            <span>单位：</span>
-            <select disabled={true} onChange={handlerChangeTimestampUint}>
-              <option>MS</option>
-              <option>S</option>
-            </select>
-          </div>
+
+        <div className="p-3 flex flex-row space-x-4 border-2">
+          <div> 转换时间戳：</div>
+          <input type="text" onInput={handlerFormatChange} value={inputFormatTime} />
+          <button className="border-1 bg-amber-50 hover:bg-amber-200" onClick={handlerFormat}>
+            转换
+          </button>
+          <ReadOnlyInputCopy className="w-52" value={outputFormatData} />
         </div>
       </div>
     </>
