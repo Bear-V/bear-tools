@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '@/component/button.jsx';
 import { dialog } from '@tauri-apps/api';
 import { listen } from '@tauri-apps/api/event';
-import { run, imageToBase64 } from '@/commands/invake.js';
+import { run, ImageToBase64 } from '@/commands/invake.js';
 
 function About() {
   const [url, setUrl] = useState('');
@@ -20,7 +20,7 @@ function About() {
       // defaultPath: await appDataDir()
     });
     console.log(filepath);
-    let res = await run(imageToBase64, { imagePath: filepath });
+    let res = await run(ImageToBase64, { imagePath: filepath });
     console.log(res);
   }
 

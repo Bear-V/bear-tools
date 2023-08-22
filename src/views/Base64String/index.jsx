@@ -1,5 +1,5 @@
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@/component/Button';
 import { run, StringToBase64, Base64ToString, GetCopy, SetCopy } from '@/commands/invake.js';
 
@@ -38,17 +38,6 @@ function Index() {
     }
   };
 
-  const changeMethod = async () => {
-    setEncodeMethod(!encodeMethod);
-    let value = inputData;
-    if (encodeMethod) {
-      await handlerBase64ToStr(value);
-    } else {
-      await handlerStrToBase64(value);
-    }
-    toast.success(`更换方法为${encodeMethod ? 'BASE64转STRING' : 'STRING转BASE64'}`);
-  };
-
   const handlerClipboard = async () => {
     const board_value = await run(GetCopy);
     setInputData(board_value);
@@ -69,6 +58,24 @@ function Index() {
     setOutputData('');
   };
 
+  const changeEncodeMethod = () => {
+    setEncodeMethod(!encodeMethod);
+  };
+  const changeMethod = async () => {
+    if (encodeMethod) {
+      setInputData(outputData);
+      await handlerBase64ToStr(outputData);
+    } else {
+      setInputData(outputData);
+      await handlerStrToBase64(outputData);
+    }
+    toast.success(`更换方法为${encodeMethod ? 'BASE64转STRING' : 'STRING转BASE64'}`);
+  };
+
+  useEffect(() => {
+    changeMethod();
+  }, [encodeMethod]);
+
   return (
     <>
       <div className="m-2 flex flex-col space-y-2 w-full h-full">
@@ -85,7 +92,7 @@ function Index() {
               <span className={encodeMethod ? 'select-none text-red-500' : 'select-none'}>
                 BASE64
               </span>
-              <span onClick={changeMethod}>
+              <span onClick={changeEncodeMethod}>
                 {encodeMethod ? (
                   <svg
                     className="w-5 h-5 text-green-500"
