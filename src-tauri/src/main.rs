@@ -1,30 +1,35 @@
 #![cfg_attr(
-all(not(debug_assertions), target_os = "windows"),
-windows_subsystem = "windows"
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
 )]
 
-mod base_conversion;
-mod copy_board;
-mod timestamp;
-mod base_hex;
+extern crate core;
 
-use base_conversion::base_n_to_n;
-use copy_board::{set_copy, get_copy};
-use timestamp::timestamp_format;
-use base_hex::{base64_to_hex, hex_to_base64};
-
+mod commands;
+mod components;
+mod error;
+mod window;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
 fn main() {
     let context = tauri::generate_context!();
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            greet,set_copy,get_copy,timestamp_format,base_n_to_n,base64_to_hex,hex_to_base64
+            commands::string_to_base64,
+            commands::base64_to_string,
+            commands::hex_to_base64,
+            commands::base64_to_hex,
+            commands::image_to_base64,
+            commands::check_cidr,
+            commands::get_copy,
+            commands::set_copy,
+            commands::base_n_to_n,
+            commands::password_check,
+            commands::random_string,
+            commands::timestamp_format,
+            commands::timestamp_parse,
+            commands::url_parse,
+            window::about::open_about
         ])
         .menu(tauri::Menu::os_default(&context.package_info().name))
         .run(context)

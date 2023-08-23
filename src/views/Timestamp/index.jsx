@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { invoke } from '@tauri-apps/api/tauri';
+import toast from 'react-hot-toast';
 import ReadOnlyInputCopy from './input.jsx';
+import { GetCopy, run, TimestampFormat, TimestampParse } from '@/commands/invake.js';
 
 function Index() {
   const timer = useRef();
@@ -9,7 +9,10 @@ function Index() {
   let [currentTime, setCurrentTime] = useState(
     timestampUnit === 'ms' ? Date.now() : Math.ceil(Date.now() / 1000)
   );
-  let [inputTime, setInputTime] = useState('');
+  let [inputTime, setInputTime] = useState(0);
+  let [inputFormatTime, setInputFormatTime] = useState('2023-08-22 11:11:11');
+  let [outputFormatData, setOutputFormatData] = useState('');
+
   let timestampFormat = {
     utc: '',
     local: '',
@@ -20,12 +23,12 @@ function Index() {
     is_leap_year: '',
     a_format: '',
     b_format: '',
-    c_format: '',
+    c_format: ''
   };
   let [outputData, setOutputData] = useState(timestampFormat);
 
   const handlerCopy = async () => {
-    const copy_data = await invoke('get_copy');
+    const copy_data = await run(GetCopy);
     if (!isNaN(Number(copy_data))) {
       setInputTime(copy_data);
     } else {
@@ -33,27 +36,26 @@ function Index() {
     }
   };
   const handlerSY = async () => {
+    console.log(currentTime);
     setInputTime(currentTime);
-    await timeToDate(currentTime);
   };
 
-  const timeToDate = async e => {
-    if (!isNaN(Number(e))) {
-      const format_date = await invoke('timestamp_format', {
-        input: e,
-      });
-      console.log(JSON.parse(format_date));
-      setOutputData(JSON.parse(format_date));
-    }
+  const timeToDate = async () => {
+    console.log(inputTime);
+    const format_date = await run(TimestampFormat, {
+      input: Number(inputTime)
+    });
+    setOutputData(format_date);
   };
 
   const handlerChange = async e => {
-    setInputTime(e.target.value);
-    await timeToDate(Number(e.target.value));
+    if (!isNaN(Number(e.target.value))) {
+      setInputTime(e.target.value);
+    }
   };
 
   const handlerClear = () => {
-    setInputTime('');
+    setInputTime(0);
     setOutputData(timestampFormat);
   };
 
@@ -64,6 +66,17 @@ function Index() {
     }
   }
 
+  const handlerFormatChange = e => {
+    setInputFormatTime(e.target.value);
+  };
+
+  const handlerFormat = async () => {
+    const format_date = await run(TimestampParse, {
+      input: inputFormatTime
+    });
+    setOutputFormatData(format_date);
+  };
+
   useEffect(() => {
     timer.current = setInterval(() => {
       let currentTime = Date.now();
@@ -72,15 +85,20 @@ function Index() {
       }
       setCurrentTime(currentTime);
       if (outputData.day_of_year) {
-        outputData['relative'] =
-          Math.ceil(Date.now() / 1000) - outputData.unix_time;
+        outputData['relative'] = Math.ceil(Date.now() / 1000) - outputData.unix_time;
         setOutputData(outputData);
       }
     }, 500);
+
     return () => {
       clearTimeout(timer.current);
     };
   }, [timestampUnit, outputData]);
+
+  useEffect(() => {
+    if (inputTime === 0 || isNaN(Number(inputTime))) return;
+    timeToDate();
+  }, [inputTime]);
 
   return (
     <>
@@ -92,7 +110,7 @@ function Index() {
           <button onClick={handlerClear}>清空</button>
         </div>
         <div className="m-2 flex flex-row">
-          <input type="text" onChange={handlerChange} value={inputTime} />
+          <input type="text" onInput={handlerChange} value={inputTime} />
           <div className="pl-4">
             <span>单位：</span>
             <select disabled={true} onChange={handlerChangeTimestampUint}>
@@ -118,19 +136,12 @@ function Index() {
               相对时间
               <ReadOnlyInputCopy
                 className="w-60"
-                value={
-                  outputData.relative
-                    ? outputData.relative + ' s'
-                    : outputData.relative
-                }
+                value={outputData.relative ? outputData.relative + ' s' : outputData.relative}
               />
             </div>
             <div>
               unix
-              <ReadOnlyInputCopy
-                className="w-60"
-                value={outputData.unix_time}
-              />
+              <ReadOnlyInputCopy className="w-60" value={outputData.unix_time} />
             </div>
           </div>
           <div className="flex-initial flex flex-col space-y-3">
@@ -153,6 +164,15 @@ function Index() {
             <ReadOnlyInputCopy className="w-56" value={outputData.b_format} />
             <ReadOnlyInputCopy className="w-56" value={outputData.c_format} />
           </div>
+        </div>
+
+        <div className="p-3 flex flex-row space-x-4 border-2">
+          <div> 转换时间戳：</div>
+          <input type="text" onInput={handlerFormatChange} value={inputFormatTime} />
+          <button className="border-1 bg-amber-50 hover:bg-amber-200" onClick={handlerFormat}>
+            转换
+          </button>
+          <ReadOnlyInputCopy className="w-52" value={outputFormatData} />
         </div>
       </div>
     </>

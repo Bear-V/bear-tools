@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
-    extend: {},
+    extend: {}
   },
   plugins: [
-    require('tailwind-scrollbar')({nocompatible: true})
+    require('tailwind-scrollbar')({ nocompatible: true })
   ],
   variants: {
     scrollbar: ['rounded']
   }
-}
+};
