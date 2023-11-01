@@ -28,6 +28,9 @@ yarn.lock
 .pnp.cjs
 .pnp.loader.mjs
 
+# bun
+bun.lockb
+
 # rust
 Cargo.lock
 *.txt
